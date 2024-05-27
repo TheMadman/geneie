@@ -1,0 +1,20 @@
+set(SOURCES
+	sequence_ref.c
+	sequence.c
+)
+
+add_library(geneie SHARED ${SOURCES})
+add_library(geneiestatic STATIC ${SOURCES})
+
+target_include_directories(geneie
+	PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+	$<INSTALL_INTERFACE:include>)
+target_include_directories(geneiestatic
+	PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+	$<INSTALL_INTERFACE:include>)
+
+install(TARGETS geneie geneiestatic
+	DESTINATION lib)
+install(DIRECTORY geneie DESTINATION include)
