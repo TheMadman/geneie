@@ -27,7 +27,7 @@ extern "C" {
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "sequence.h"
+#include "code.h"
 
 /**
  * \file

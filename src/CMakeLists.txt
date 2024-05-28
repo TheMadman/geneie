@@ -2,6 +2,7 @@ set(SOURCES
 	code.c
 	sequence_ref.c
 	sequence.c
+	sequence_tools.c
 )
 
 add_library(geneie SHARED ${SOURCES})

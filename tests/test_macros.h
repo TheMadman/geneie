@@ -19,3 +19,5 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#define VALID_CHARS "ACGTURYKMSWBDHVNX-"
