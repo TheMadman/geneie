@@ -29,6 +29,25 @@ static bool in(char c, const char *str)
 	return false;
 }
 
+void test_from_string_success()
+{
+	struct geneie_sequence *result = geneie_sequence_from_string(VALID_CHARS);
+
+	assert(result);
+
+	// length shouldn't consider the null pointer
+	assert(result->length == sizeof(VALID_CHARS) - 1);
+
+	geneie_sequence_free(result);
+}
+
+void test_from_string_fail()
+{
+	struct geneie_sequence *result = geneie_sequence_from_string("Camel");
+
+	assert(!result);
+}
+
 void test_char_valid_success()
 {
 	for (const char *current = VALID_CHARS; *current; current++) {
@@ -56,6 +75,8 @@ void test_string_valid_fail()
 
 int main()
 {
+	test_from_string_success();
+	test_from_string_fail();
 	test_char_valid_success();
 	test_char_valid_fail();
 	test_string_valid_success();

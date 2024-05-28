@@ -23,6 +23,7 @@
 extern "C" {
 #endif
 
+#include <sys/types.h>
 #include <stdbool.h>
 
 /**
@@ -57,6 +58,52 @@ enum GENEIE_SEQUENCE_CODE {
 	GENEIE_SEQUENCE_MASKED = 'X',
 	GENEIE_SEQUENCE_GAP = '-',
 };
+
+/**
+ * \brief Represents a DNA, mRNA, etc. sequence.
+ *
+ * These objects are intended to always be heap-allocated.
+ * Constructing these objects from strings, from
+ * geneie_sequence_ref objects, or from each other,
+ * will always allocate on the heap.
+ *
+ * You must pass these to geneie_sequence_free() when
+ * finished with them.
+ */
+struct geneie_sequence {
+	/**
+	 * \brief The length of the gene sequence.
+	 *
+	 * &codes[length] returns one pointer past the end
+	 * of the data.
+	 */
+	ssize_t length;
+
+	/**
+	 * \brief The beginning of the gene sequence.
+	 */
+	enum GENEIE_SEQUENCE_CODE codes[];
+};
+
+/**
+ * \brief Constructs a new geneie_sequence from the given string.
+ *
+ * If the string is not a valid sequence, then the function returns
+ * a NULL pointer.
+ *
+ * \param string The string to make a sequence from.
+ *
+ * \returns A newly constructed geneie_sequence object, or NULL
+ * 	if there was an error.
+ */
+struct geneie_sequence *geneie_sequence_from_string(const char *string);
+
+/**
+ * \brief Frees a given geneie_sequence.
+ *
+ * \param sequence The sequence to free.
+ */
+void geneie_sequence_free(struct geneie_sequence *sequence);
 
 /**
  * \brief Checks if a given null-terminated character string contains
