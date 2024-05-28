@@ -81,9 +81,27 @@ struct geneie_sequence {
 
 	/**
 	 * \brief The beginning of the gene sequence.
+	 *
+	 * Gene sequences in this object are NOT null-terminated.
 	 */
 	enum GENEIE_SEQUENCE_CODE codes[];
 };
+
+/**
+ * \brief Allocates uninitialized memory for a geneie_sequence
+ * 	object and initializes its `length` member.
+ *
+ * The resulting object can store `length` acid codes.
+ *
+ * This object must be passed to geneie_sequence_free() when
+ * finished.
+ *
+ * \param length The amount of codes to allocate memory for.
+ *
+ * \returns A pointer to a newly-allocated object, or NULL
+ * 	if allocation failed.
+ */
+struct geneie_sequence *geneie_sequence_alloc(ssize_t length);
 
 /**
  * \brief Constructs a new geneie_sequence from the given string.
@@ -97,6 +115,17 @@ struct geneie_sequence {
  * 	if there was an error.
  */
 struct geneie_sequence *geneie_sequence_from_string(const char *string);
+
+/**
+ * \brief Constructs a geneie_sequence that is a copy of the given
+ * 	sequence.
+ *
+ * \param other The sequence object to copy.
+ *
+ * \returns A newly constructed geneie_sequence object, or NULL
+ * 	if allocation failed.
+ */
+struct geneie_sequence *geneie_sequence_copy(struct geneie_sequence *other);
 
 /**
  * \brief Frees a given geneie_sequence.

@@ -19,6 +19,8 @@
 #include "test_macros.h"
 #include "geneie/sequence.h"
 
+#include <string.h>
+
 #define VALID_CHARS "ACGTURYKMSWBDHVNX-"
 
 static bool in(char c, const char *str)
@@ -28,6 +30,28 @@ static bool in(char c, const char *str)
 			return true;
 	return false;
 }
+
+void test_alloc_success()
+{
+	{
+		struct geneie_sequence *result = geneie_sequence_alloc(1);
+
+		assert(result);
+
+		geneie_sequence_free(result);
+	}
+	{
+		struct geneie_sequence *result = geneie_sequence_alloc(0);
+
+		// 0 size should return a pointer to a ssize_t
+		assert(result);
+
+		geneie_sequence_free(result);
+	}
+}
+
+// cba with stubbing out malloc or something right now
+// void test_alloc_fail()
 
 void test_from_string_success()
 {
@@ -46,6 +70,21 @@ void test_from_string_fail()
 	struct geneie_sequence *result = geneie_sequence_from_string("Camel");
 
 	assert(!result);
+}
+
+void test_copy_success()
+{
+	struct geneie_sequence *result = geneie_sequence_from_string(VALID_CHARS);
+
+	assert(result);
+
+	struct geneie_sequence *copy = geneie_sequence_copy(result);
+
+	assert(copy->length == result->length);
+	assert(!memcmp(copy->codes, result->codes, copy->length));
+
+	geneie_sequence_free(result);
+	geneie_sequence_free(copy);
 }
 
 void test_char_valid_success()
@@ -75,6 +114,7 @@ void test_string_valid_fail()
 
 int main()
 {
+	test_alloc_success();
 	test_from_string_success();
 	test_from_string_fail();
 	test_char_valid_success();
