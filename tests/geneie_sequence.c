@@ -23,14 +23,6 @@
 
 #define VALID_CHARS "ACGTURYKMSWBDHVNX-"
 
-static bool in(char c, const char *str)
-{
-	for (; *str; str++)
-		if (c == *str)
-			return true;
-	return false;
-}
-
 void test_alloc_success()
 {
 	{
@@ -87,38 +79,9 @@ void test_copy_success()
 	geneie_sequence_free(copy);
 }
 
-void test_char_valid_success()
-{
-	for (const char *current = VALID_CHARS; *current; current++) {
-		assert(geneie_sequence_char_valid(*current));
-	}
-}
-
-void test_char_valid_fail()
-{
-	// just testing the ASCII printable character range for now
-	for (char current = ' '; current != '~'; current++)
-		if (!in(current, VALID_CHARS))
-			assert(!geneie_sequence_char_valid(current));
-}
-
-void test_string_valid_success()
-{
-	assert(geneie_sequence_string_valid(VALID_CHARS));
-}
-
-void test_string_valid_fail()
-{
-	assert(!geneie_sequence_string_valid("Camel"));
-}
-
 int main()
 {
 	test_alloc_success();
 	test_from_string_success();
 	test_from_string_fail();
-	test_char_valid_success();
-	test_char_valid_fail();
-	test_string_valid_success();
-	test_string_valid_fail();
 }

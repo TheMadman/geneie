@@ -4,5 +4,6 @@ function(testcase target)
 	add_test(NAME ${target} COMMAND test_${target})
 endfunction()
 
+testcase(geneie_code)
 testcase(geneie_sequence)
 testcase(geneie_sequence_ref)

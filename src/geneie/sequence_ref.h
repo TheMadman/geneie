@@ -55,7 +55,7 @@ struct geneie_sequence_ref {
 	/**
 	 * \brief The beginning of the gene sequence.
 	 */
-	enum GENEIE_SEQUENCE_CODE *const codes;
+	enum GENEIE_CODE *const codes;
 };
 
 /**
@@ -71,8 +71,8 @@ struct geneie_sequence_ref {
 #define geneie_sequence_ref_from_literal(string_literal) \
 ((struct geneie_sequence_ref) { \
 	sizeof(string_literal) - 1, \
-	geneie_sequence_string_valid(string_literal) ? \
-		(enum GENEIE_SEQUENCE_CODE *const)string_literal : \
+	geneie_code_string_valid(string_literal) ? \
+		(enum GENEIE_CODE *const)string_literal : \
 		NULL, \
 })
 

@@ -26,38 +26,11 @@ extern "C" {
 #include <sys/types.h>
 #include <stdbool.h>
 
+#include "code.h"
+
 /**
  * \file
  */
-
-/**
- * \brief The IUPAC nucleic acid codes.
- */
-enum GENEIE_SEQUENCE_CODE {
-	// Unambiguous codes
-	GENEIE_SEQUENCE_ADENINE = 'A',
-	GENEIE_SEQUENCE_CYTOSINE = 'C',
-	GENEIE_SEQUENCE_GUANINE = 'G',
-	GENEIE_SEQUENCE_THYMINE = 'T',
-	GENEIE_SEQUENCE_URACIL = 'U',
-
-	// Ambiguous codes
-	GENEIE_SEQUENCE_PURINE = 'R',
-	GENEIE_SEQUENCE_PYRIMDINE = 'Y',
-	GENEIE_SEQUENCE_KETO = 'K',
-	GENEIE_SEQUENCE_AMINO = 'M',
-	GENEIE_SEQUENCE_STRONG = 'S',
-	GENEIE_SEQUENCE_WEAK = 'W',
-	GENEIE_SEQUENCE_NOT_A = 'B',
-	GENEIE_SEQUENCE_NOT_C = 'D',
-	GENEIE_SEQUENCE_NOT_G = 'H',
-	GENEIE_SEQUENCE_NOT_TU = 'V',
-	GENEIE_SEQUENCE_ANY = 'N',
-
-	// Special codes
-	GENEIE_SEQUENCE_MASKED = 'X',
-	GENEIE_SEQUENCE_GAP = '-',
-};
 
 /**
  * \brief Represents a DNA, mRNA, etc. sequence.
@@ -84,7 +57,7 @@ struct geneie_sequence {
 	 *
 	 * Gene sequences in this object are NOT null-terminated.
 	 */
-	enum GENEIE_SEQUENCE_CODE codes[];
+	enum GENEIE_CODE codes[];
 };
 
 /**
@@ -133,25 +106,6 @@ struct geneie_sequence *geneie_sequence_copy(struct geneie_sequence *other);
  * \param sequence The sequence to free.
  */
 void geneie_sequence_free(struct geneie_sequence *sequence);
-
-/**
- * \brief Checks if a given null-terminated character string contains
- * 	exclusively valid sequence codes.
- *
- * \param string The string to test.
- *
- * \returns true if the seqeunce is valid, false otherwise.
- */
-bool geneie_sequence_string_valid(const char *string);
-
-/**
- * \brief Checks if a given character is a valid sequence character.
- *
- * \param character The character to test.
- *
- * \returns true if the character is valid, false otherwise.
- */
-bool geneie_sequence_char_valid(char character);
 
 #ifdef __cplusplus
 } // extern "C"

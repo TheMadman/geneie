@@ -1,4 +1,5 @@
 set(SOURCES
+	code.c
 	sequence_ref.c
 	sequence.c
 )
