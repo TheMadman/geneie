@@ -30,33 +30,32 @@ extern "C" {
  */
 
 /**
- * \brief The IUPAC nucleic acid codes.
+ * \brief The type for storing IUPAC nucleic acid codes.
  */
-enum GENEIE_CODE {
-	// Unambiguous codes
-	GENEIE_CODE_ADENINE = 'A',
-	GENEIE_CODE_CYTOSINE = 'C',
-	GENEIE_CODE_GUANINE = 'G',
-	GENEIE_CODE_THYMINE = 'T',
-	GENEIE_CODE_URACIL = 'U',
+typedef char geneie_code;
+// Unambiguous codes
+#define GENEIE_CODE_ADENINE 'A'
+#define GENEIE_CODE_CYTOSINE 'C'
+#define GENEIE_CODE_GUANINE 'G'
+#define GENEIE_CODE_THYMINE 'T'
+#define GENEIE_CODE_URACIL 'U'
 
-	// Ambiguous codes
-	GENEIE_CODE_PURINE = 'R',
-	GENEIE_CODE_PYRIMDINE = 'Y',
-	GENEIE_CODE_KETO = 'K',
-	GENEIE_CODE_AMINO = 'M',
-	GENEIE_CODE_STRONG = 'S',
-	GENEIE_CODE_WEAK = 'W',
-	GENEIE_CODE_NOT_A = 'B',
-	GENEIE_CODE_NOT_C = 'D',
-	GENEIE_CODE_NOT_G = 'H',
-	GENEIE_CODE_NOT_TU = 'V',
-	GENEIE_CODE_ANY = 'N',
+// Ambiguous codes
+#define GENEIE_CODE_PURINE 'R'
+#define GENEIE_CODE_PYRIMDINE 'Y'
+#define GENEIE_CODE_KETO 'K'
+#define GENEIE_CODE_AMINO 'M'
+#define GENEIE_CODE_STRONG 'S'
+#define GENEIE_CODE_WEAK 'W'
+#define GENEIE_CODE_NOT_A 'B'
+#define GENEIE_CODE_NOT_C 'D'
+#define GENEIE_CODE_NOT_G 'H'
+#define GENEIE_CODE_NOT_TU 'V'
+#define GENEIE_CODE_ANY 'N'
 
-	// Special codes
-	GENEIE_CODE_MASKED = 'X',
-	GENEIE_CODE_GAP = '-',
-};
+// Special codes
+#define GENEIE_CODE_MASKED 'X'
+#define GENEIE_CODE_GAP '-'
 
 /**
  * \brief Checks if a given null-terminated character string contains

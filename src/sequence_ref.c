@@ -15,7 +15,7 @@ struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)
 	const bool valid = geneie_code_string_valid(string);
 	return (struct geneie_sequence_ref) {
 		length,
-		valid ? (enum GENEIE_CODE *)string : NULL,
+		valid ? (geneie_code *)string : NULL,
 	};
 }
 

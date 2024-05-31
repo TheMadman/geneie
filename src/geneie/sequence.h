@@ -57,7 +57,7 @@ struct geneie_sequence {
 	 *
 	 * Gene sequences in this object are NOT null-terminated.
 	 */
-	enum GENEIE_CODE *codes;
+	geneie_code *codes;
 };
 
 /**
