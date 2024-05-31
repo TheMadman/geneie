@@ -61,6 +61,30 @@ geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence);
 struct geneie_sequence
 geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference);
 
+/**
+ * \brief Performs an in-place translation of a
+ * 	DNA sequence to a pre-mRNA sequence.
+ *
+ * Ambiguous amino acid codes and gaps are left
+ * untouched. Otherwise, all T codes are transformed
+ * into U codes.
+ *
+ * \param reference The sequence reference to modify.
+ */
+void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference);
+
+/**
+ * \brief The function signature for a splicer.
+ *
+ * A splicer is a function which takes a pre-mRNA
+ * sequence and returns, as a sequence, the first
+ * part that should be spliced, or a reference to
+ * the end of the sequence if there is nothing to
+ * splice.
+ */
+typedef struct geneie_sequence_ref
+	geneie_sequence_tools_splicer(struct geneie_sequence_ref strand);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

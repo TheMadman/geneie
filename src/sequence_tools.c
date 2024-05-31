@@ -27,3 +27,17 @@ geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference)
 	memcpy(result.codes, reference.codes, reference.length);
 	return result;
 }
+
+void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference)
+{
+	const geneie_code *const end = &reference.codes[reference.length];
+	for (
+		geneie_code *current = reference.codes;
+		current < end;
+		current++
+	) {
+		if (*current == GENEIE_CODE_THYMINE)
+			*current = GENEIE_CODE_URACIL;
+	}
+}
+

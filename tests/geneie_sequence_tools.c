@@ -25,6 +25,7 @@
 #define ref_from_sequence geneie_sequence_tools_ref_from_sequence
 #define sequence_from_ref geneie_sequence_tools_sequence_from_ref
 #define ref_from_literal geneie_sequence_ref_from_literal
+#define ref_from_string geneie_sequence_ref_from_string
 
 void test_ref_from_sequence()
 {
@@ -66,8 +67,36 @@ void test_sequence_from_ref()
 	}
 }
 
+void test_dna_to_premrna()
+{
+	{
+		char dna[] = "ACGTRYKMSWBDHVNX-";
+
+		struct geneie_sequence_ref
+			reference = ref_from_string(dna);
+
+		geneie_sequence_tools_dna_to_premrna(reference);
+
+		assert(!strcmp(dna, "ACGURYKMSWBDHVNX-"));
+	}
+
+	{
+		char dna[] = "ACGURYKMSWBDHVNX-";
+
+		struct geneie_sequence_ref
+			reference = ref_from_string(dna);
+
+		geneie_sequence_tools_dna_to_premrna(reference);
+
+		// should've done nothing
+
+		assert(!strcmp(dna, "ACGURYKMSWBDHVNX-"));
+	}
+}
+
 int main()
 {
 	test_ref_from_sequence();
 	test_sequence_from_ref();
+	test_dna_to_premrna();
 }
