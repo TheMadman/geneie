@@ -28,27 +28,18 @@
 
 void test_ref_from_sequence()
 {
-	{
-		struct geneie_sequence
-			*sequence = from_string(VALID_CHARS);
+	struct geneie_sequence
+		sequence = from_string(VALID_CHARS);
 
-		assert(sequence);
+	assert(geneie_sequence_valid(sequence));
 
-		struct geneie_sequence_ref
-			reference = ref_from_sequence(sequence);
+	struct geneie_sequence_ref
+		reference = ref_from_sequence(sequence);
 
-		assert(reference.length == sequence->length);
-		assert(reference.codes == sequence->codes);
+	assert(reference.length == sequence.length);
+	assert(reference.codes == sequence.codes);
 
-		geneie_sequence_free(sequence);
-	}
-
-	{
-		struct geneie_sequence_ref
-			reference = ref_from_sequence(NULL);
-
-		assert(!geneie_sequence_ref_valid(reference));
-	}
+	geneie_sequence_free(sequence);
 }
 
 void test_sequence_from_ref()
@@ -58,20 +49,20 @@ void test_sequence_from_ref()
 			string_ref = ref_from_literal(VALID_CHARS);
 
 		struct geneie_sequence
-			*sequence = sequence_from_ref(string_ref);
+			sequence = sequence_from_ref(string_ref);
 
-		assert(sequence);
-		assert(sequence->length == string_ref.length);
-		assert(!memcmp(sequence->codes, string_ref.codes, string_ref.length));
+		assert(geneie_sequence_valid(sequence));
+		assert(sequence.length == string_ref.length);
+		assert(!memcmp(sequence.codes, string_ref.codes, string_ref.length));
 	}
 
 	{
 		struct geneie_sequence_ref invalid = { 0 };
 
 		struct geneie_sequence
-			*sequence = sequence_from_ref(invalid);
+			sequence = sequence_from_ref(invalid);
 
-		assert(!sequence);
+		assert(!geneie_sequence_valid(sequence));
 	}
 }
 

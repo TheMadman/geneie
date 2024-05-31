@@ -57,8 +57,18 @@ struct geneie_sequence {
 	 *
 	 * Gene sequences in this object are NOT null-terminated.
 	 */
-	enum GENEIE_CODE codes[];
+	enum GENEIE_CODE *codes;
 };
+
+/**
+ * \brief Returns whether this is a valid geneie_sequence
+ * 	object.
+ *
+ * \param sequence The sequence to test.
+ *
+ * \returns True if the sequence is safe to use, false otherwise.
+ */
+bool geneie_sequence_valid(struct geneie_sequence sequence);
 
 /**
  * \brief Allocates uninitialized memory for a geneie_sequence
@@ -74,7 +84,7 @@ struct geneie_sequence {
  * \returns A pointer to a newly-allocated object, or NULL
  * 	if allocation failed.
  */
-struct geneie_sequence *geneie_sequence_alloc(ssize_t length);
+struct geneie_sequence geneie_sequence_alloc(ssize_t length);
 
 /**
  * \brief Constructs a new geneie_sequence from the given string.
@@ -87,7 +97,7 @@ struct geneie_sequence *geneie_sequence_alloc(ssize_t length);
  * \returns A newly constructed geneie_sequence object, or NULL
  * 	if there was an error.
  */
-struct geneie_sequence *geneie_sequence_from_string(const char *string);
+struct geneie_sequence geneie_sequence_from_string(const char *string);
 
 /**
  * \brief Constructs a geneie_sequence that is a copy of the given
@@ -98,14 +108,14 @@ struct geneie_sequence *geneie_sequence_from_string(const char *string);
  * \returns A newly constructed geneie_sequence object, or NULL
  * 	if allocation failed.
  */
-struct geneie_sequence *geneie_sequence_copy(struct geneie_sequence *other);
+struct geneie_sequence geneie_sequence_copy(struct geneie_sequence other);
 
 /**
  * \brief Frees a given geneie_sequence.
  *
  * \param sequence The sequence to free.
  */
-void geneie_sequence_free(struct geneie_sequence *sequence);
+void geneie_sequence_free(struct geneie_sequence sequence);
 
 #ifdef __cplusplus
 } // extern "C"

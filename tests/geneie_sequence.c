@@ -25,21 +25,11 @@
 
 void test_alloc_success()
 {
-	{
-		struct geneie_sequence *result = geneie_sequence_alloc(1);
+	struct geneie_sequence result = geneie_sequence_alloc(1);
 
-		assert(result);
+	assert(result.codes);
 
-		geneie_sequence_free(result);
-	}
-	{
-		struct geneie_sequence *result = geneie_sequence_alloc(0);
-
-		// 0 size should return a pointer to a ssize_t
-		assert(result);
-
-		geneie_sequence_free(result);
-	}
+	geneie_sequence_free(result);
 }
 
 // cba with stubbing out malloc or something right now
@@ -47,33 +37,33 @@ void test_alloc_success()
 
 void test_from_string_success()
 {
-	struct geneie_sequence *result = geneie_sequence_from_string(VALID_CHARS);
+	struct geneie_sequence result = geneie_sequence_from_string(VALID_CHARS);
 
-	assert(result);
+	assert(geneie_sequence_valid(result));
 
 	// length shouldn't consider the null pointer
-	assert(result->length == sizeof(VALID_CHARS) - 1);
+	assert(result.length == sizeof(VALID_CHARS) - 1);
 
 	geneie_sequence_free(result);
 }
 
 void test_from_string_fail()
 {
-	struct geneie_sequence *result = geneie_sequence_from_string("Camel");
+	struct geneie_sequence result = geneie_sequence_from_string("Camel");
 
-	assert(!result);
+	assert(!result.codes);
 }
 
 void test_copy_success()
 {
-	struct geneie_sequence *result = geneie_sequence_from_string(VALID_CHARS);
+	struct geneie_sequence result = geneie_sequence_from_string(VALID_CHARS);
 
-	assert(result);
+	assert(result.codes);
 
-	struct geneie_sequence *copy = geneie_sequence_copy(result);
+	struct geneie_sequence copy = geneie_sequence_copy(result);
 
-	assert(copy->length == result->length);
-	assert(!memcmp(copy->codes, result->codes, copy->length));
+	assert(copy.length == result.length);
+	assert(!memcmp(copy.codes, result.codes, copy.length));
 
 	geneie_sequence_free(result);
 	geneie_sequence_free(copy);

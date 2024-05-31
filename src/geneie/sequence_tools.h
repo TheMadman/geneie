@@ -42,7 +42,7 @@ extern "C" {
  * 	reference if sequence is NULL.
  */
 struct geneie_sequence_ref
-geneie_sequence_tools_ref_from_sequence(struct geneie_sequence *sequence);
+geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence);
 
 /**
  * \brief Allocates a new sequence object from a
@@ -58,7 +58,7 @@ geneie_sequence_tools_ref_from_sequence(struct geneie_sequence *sequence);
  * \returns A pointer to the newly allocated sequence, or
  * 	NULL if an error occurred.
  */
-struct geneie_sequence *
+struct geneie_sequence
 geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference);
 
 #ifdef __cplusplus
