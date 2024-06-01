@@ -19,3 +19,23 @@ struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)
 	};
 }
 
+bool geneie_sequence_ref_equal(
+	struct geneie_sequence_ref first,
+	struct geneie_sequence_ref second
+)
+{
+	if (first.length != second.length)
+		return false;
+
+	const geneie_code
+		*first_code = first.codes,
+		*second_code = second.codes;
+	ssize_t length = first.length;
+
+	for(; length; first_code++, second_code++, length--)
+		if (*first_code != *second_code)
+			return false;
+
+	return true;
+}
+

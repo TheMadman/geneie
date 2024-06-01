@@ -99,6 +99,23 @@ struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string);
  */
 bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence);
 
+/**
+ * \brief Performs an equality comparison between two geneie_sequence_ref
+ * 	objects.
+ *
+ * This function checks the contents of the two sequence_ref
+ * objects for equality, even if they reference different sequences.
+ *
+ * \param first The first sequence.
+ * \param second The second sequence.
+ *
+ * \returns True if equal, false otherwise.
+ */
+bool geneie_sequence_ref_equal(
+	struct geneie_sequence_ref first,
+	struct geneie_sequence_ref second
+);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

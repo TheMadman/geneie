@@ -53,11 +53,43 @@ void test_from_string_fail()
 	assert(!geneie_sequence_ref_valid(result));
 }
 
+void test_equal_success()
+{
+	struct geneie_sequence_ref
+		first = geneie_sequence_ref_from_string(VALID_CHARS),
+		second = geneie_sequence_ref_from_string(VALID_CHARS);
+
+	assert(geneie_sequence_ref_equal(first, second));
+}
+
+void test_equal_fail()
+{
+	{
+		// different lengths
+		struct geneie_sequence_ref
+			first = geneie_sequence_ref_from_string(VALID_CHARS),
+			second = geneie_sequence_ref_from_string("AACGTAG");
+
+		assert(!geneie_sequence_ref_equal(first, second));
+	}
+
+	{
+		// same lengths
+		struct geneie_sequence_ref
+			first = geneie_sequence_ref_from_string("ACGT"),
+			second = geneie_sequence_ref_from_string("ACGU");
+
+		assert(!geneie_sequence_ref_equal(first, second));
+	}
+}
+
 int main()
 {
 	test_from_literal_success();
 	test_from_literal_fail();
 	test_from_string_success();
 	test_from_string_fail();
+	test_equal_success();
+	test_equal_fail();
 }
 
