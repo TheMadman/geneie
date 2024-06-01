@@ -82,7 +82,10 @@ void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference);
  * with zero length if there is nothing to splice.
  */
 typedef struct geneie_sequence_ref
-	geneie_sequence_tools_splicer(struct geneie_sequence_ref strand);
+geneie_sequence_tools_splicer(
+	struct geneie_sequence_ref strand,
+	void *param
+);
 
 /**
  * \brief Splices a pre-mRNA sequence into a mature
@@ -105,13 +108,17 @@ typedef struct geneie_sequence_ref
  * \param strand The strand of pre-mRNA to splice.
  * \param splicer_func A function which analyses the
  * 	strand for a section to splice.
+ * \param param An optional parameter. This will be passed
+ * 	to the splicer_func on each call. This provides
+ * 	a way to track state between calls to splicer_func.
  *
  * \returns A new reference, containing the correct
  * 	length, after splicing.
  */
 struct geneie_sequence_ref geneie_sequence_tools_splice(
 	struct geneie_sequence_ref strand,
-	geneie_sequence_tools_splicer *splicer_func
+	geneie_sequence_tools_splicer *splicer_func,
+	void *param
 );
 
 #ifdef __cplusplus

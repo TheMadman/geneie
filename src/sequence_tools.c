@@ -43,13 +43,14 @@ void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference)
 
 struct geneie_sequence_ref geneie_sequence_tools_splice(
 	struct geneie_sequence_ref strand,
-	geneie_sequence_tools_splicer *splicer_func
+	geneie_sequence_tools_splicer *splicer_func,
+	void *state
 )
 {
 	if (strand.length <= 0)
 		return strand;
 
-	struct geneie_sequence_ref to_splice = splicer_func(strand);
+	struct geneie_sequence_ref to_splice = splicer_func(strand, state);
 
 	if (to_splice.length <= 0)
 		return strand;
@@ -61,7 +62,12 @@ struct geneie_sequence_ref geneie_sequence_tools_splice(
 		.codes = to_move,
 	};
 
-	struct geneie_sequence_ref remainder_after_futures = geneie_sequence_tools_splice(remainder, splicer_func);
+	struct geneie_sequence_ref
+	remainder_after_futures = geneie_sequence_tools_splice(
+		remainder,
+		splicer_func,
+		state
+	);
 
 	const ssize_t amount_to_move = remainder_after_futures.length;
 

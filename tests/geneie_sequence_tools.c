@@ -94,8 +94,9 @@ void test_dna_to_premrna()
 	}
 }
 
-struct geneie_sequence_ref splice_G(struct geneie_sequence_ref strand)
+struct geneie_sequence_ref splice_G(struct geneie_sequence_ref strand, void *param)
 {
+	(void)param;
 	ssize_t length = strand.length;
 	geneie_code *current = strand.codes;
 
@@ -118,7 +119,7 @@ void test_splice()
 
 		const ssize_t original_length = sequence.length;
 
-		struct geneie_sequence_ref new_sequence = geneie_sequence_tools_splice(sequence, &splice_G);
+		struct geneie_sequence_ref new_sequence = geneie_sequence_tools_splice(sequence, &splice_G, NULL);
 
 		assert(new_sequence.length == original_length - 1);
 
@@ -132,7 +133,7 @@ void test_splice()
 
 		struct geneie_sequence_ref sequence = ref_from_string(dna);
 
-		struct geneie_sequence_ref new_sequence = geneie_sequence_tools_splice(sequence, &splice_G);
+		struct geneie_sequence_ref new_sequence = geneie_sequence_tools_splice(sequence, &splice_G, NULL);
 
 		assert(new_sequence.length == 2);
 		assert(geneie_sequence_ref_equal(ref_from_literal("UA"), new_sequence));
