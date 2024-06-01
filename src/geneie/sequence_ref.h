@@ -81,7 +81,7 @@ struct geneie_sequence_ref {
  * 	character array.
  *
  * If the string contains characters that aren't valid sequence codes,
- * an error object is returned. 
+ * an error object is returned.
  *
  * \param string The string to construct a sequence from.
  *
