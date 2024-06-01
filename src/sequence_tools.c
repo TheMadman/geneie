@@ -65,7 +65,7 @@ struct geneie_sequence_ref geneie_sequence_tools_splice(
 
 	const ssize_t amount_to_move = remainder_after_futures.length;
 
-	memmove(to_splice.codes, to_move, amount_to_move);
+	memcpy(to_splice.codes, to_move, amount_to_move);
 
 	const ssize_t
 		amount_before_splice = (to_splice.codes - strand.codes),
