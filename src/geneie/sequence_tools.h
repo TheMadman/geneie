@@ -78,12 +78,41 @@ void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference);
  *
  * A splicer is a function which takes a pre-mRNA
  * sequence and returns, as a sequence, the first
- * part that should be spliced, or a reference to
- * the end of the sequence if there is nothing to
- * splice.
+ * part that should be spliced, or a reference
+ * with zero length if there is nothing to splice.
  */
 typedef struct geneie_sequence_ref
 	geneie_sequence_tools_splicer(struct geneie_sequence_ref strand);
+
+/**
+ * \brief Splices a pre-mRNA sequence into a mature
+ * 	mRNA sequence.
+ *
+ * Takes a geneie_sequence_tools_splicer callback, which
+ * can be called multiple times: first with the full
+ * sequence, then, if there was a sequence to splice,
+ * with the remainder of the original sequence, and
+ * so on, until there is nothing left to splice.
+ *
+ * Then, the original sequence is modified in-place
+ * to remove the parts of the sequence that are to
+ * be spliced.
+ *
+ * A new sequence, containing the final length, is
+ * returned. The original reference is invalid and should
+ * not be used anymore.
+ *
+ * \param strand The strand of pre-mRNA to splice.
+ * \param splicer_func A function which analyses the
+ * 	strand for a section to splice.
+ *
+ * \returns A new reference, containing the correct
+ * 	length, after splicing.
+ */
+struct geneie_sequence_ref geneie_sequence_tools_splice(
+	struct geneie_sequence_ref strand,
+	geneie_sequence_tools_splicer *splicer_func
+);
 
 #ifdef __cplusplus
 } // extern "C"

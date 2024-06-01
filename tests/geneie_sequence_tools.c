@@ -94,9 +94,55 @@ void test_dna_to_premrna()
 	}
 }
 
+struct geneie_sequence_ref splice_G(struct geneie_sequence_ref strand)
+{
+	ssize_t length = strand.length;
+	geneie_code *current = strand.codes;
+
+	for (; length; current++, length--)
+		if (*current == GENEIE_CODE_GUANINE)
+			return (struct geneie_sequence_ref) {
+				1,
+				current,
+			};
+
+	return (struct geneie_sequence_ref) { 0 };
+}
+
+void test_splice()
+{
+	{
+		char dna[] = VALID_CHARS;
+
+		struct geneie_sequence_ref sequence = ref_from_string(dna);
+
+		const ssize_t original_length = sequence.length;
+
+		struct geneie_sequence_ref new_sequence = geneie_sequence_tools_splice(sequence, &splice_G);
+
+		assert(new_sequence.length == original_length - 1);
+
+		struct geneie_sequence_ref expected = ref_from_literal("ACTURYKMSWBDHVNX-");
+
+		assert(geneie_sequence_ref_equal(expected, new_sequence));
+	}
+
+	{
+		char dna[] = "GGGUGGGA";
+
+		struct geneie_sequence_ref sequence = ref_from_string(dna);
+
+		struct geneie_sequence_ref new_sequence = geneie_sequence_tools_splice(sequence, &splice_G);
+
+		assert(new_sequence.length == 2);
+		assert(geneie_sequence_ref_equal(ref_from_literal("UA"), new_sequence));
+	}
+}
+
 int main()
 {
 	test_ref_from_sequence();
 	test_sequence_from_ref();
 	test_dna_to_premrna();
+	test_splice();
 }
