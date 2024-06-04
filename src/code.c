@@ -35,3 +35,40 @@ bool geneie_code_nucleic_string_valid(const char *string)
 	return true;
 }
 
+bool geneie_code_amino_char_valid(char c)
+{
+	switch (c) {
+		case GENEIE_CODE_ALANINE:
+		case GENEIE_CODE_CYSTEINE:
+		case GENEIE_CODE_ASPARTIC_ACID:
+		case GENEIE_CODE_GLUTAMIC_ACID:
+		case GENEIE_CODE_PHENYLALANINE:
+		case GENEIE_CODE_GLYCINE:
+		case GENEIE_CODE_HISTIDINE:
+		case GENEIE_CODE_ISOLEUCINE:
+		case GENEIE_CODE_LYSINE:
+		case GENEIE_CODE_LEUCINE:
+		case GENEIE_CODE_METHIONINE:
+		case GENEIE_CODE_ASPARAGINE:
+		case GENEIE_CODE_PROLINE:
+		case GENEIE_CODE_GLUTAMINE:
+		case GENEIE_CODE_ARGININE:
+		case GENEIE_CODE_SERINE:
+		case GENEIE_CODE_THREONINE:
+		case GENEIE_CODE_VALINE:
+		case GENEIE_CODE_TRYPTOPHAN:
+		case GENEIE_CODE_TYROSINE:
+			return true;
+		default:
+			return false;
+	}
+}
+
+bool geneie_code_amino_string_valid(const char *string)
+{
+	for (; *string; string++)
+		if (!geneie_code_amino_char_valid(*string))
+			return false;
+	return true;
+}
+

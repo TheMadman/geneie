@@ -60,6 +60,28 @@ typedef char geneie_code;
 #define GENEIE_CODE_MASKED 'X'
 #define GENEIE_CODE_GAP '-'
 
+// Amino acid codes
+#define GENEIE_CODE_ALANINE 'A'
+#define GENEIE_CODE_CYSTEINE 'C'
+#define GENEIE_CODE_ASPARTIC_ACID 'D'
+#define GENEIE_CODE_GLUTAMIC_ACID 'E'
+#define GENEIE_CODE_PHENYLALANINE 'F'
+#define GENEIE_CODE_GLYCINE 'G'
+#define GENEIE_CODE_HISTIDINE 'H'
+#define GENEIE_CODE_ISOLEUCINE 'I'
+#define GENEIE_CODE_LYSINE 'K'
+#define GENEIE_CODE_LEUCINE 'L'
+#define GENEIE_CODE_METHIONINE 'M'
+#define GENEIE_CODE_ASPARAGINE 'N'
+#define GENEIE_CODE_PROLINE 'P'
+#define GENEIE_CODE_GLUTAMINE 'Q'
+#define GENEIE_CODE_ARGININE 'R'
+#define GENEIE_CODE_SERINE 'S'
+#define GENEIE_CODE_THREONINE 'T'
+#define GENEIE_CODE_VALINE 'V'
+#define GENEIE_CODE_TRYPTOPHAN 'W'
+#define GENEIE_CODE_TYROSINE 'Y'
+
 /**
  * \brief Checks if a given null-terminated character string contains
  * 	exclusively valid neucleic acid codes.
@@ -78,6 +100,25 @@ bool geneie_code_nucleic_string_valid(const char *string);
  * \returns true if the character is valid, false otherwise.
  */
 bool geneie_code_nucleic_char_valid(char character);
+
+/**
+ * \brief Checks if a given null-terminated string contains
+ * 	exclusively valid amino acid codes.
+ *
+ * \param string The string to test.
+ *
+ * \returns true if the sequence is valid, false otherwise.
+ */
+bool geneie_code_amino_string_valid(const char *string);
+
+/**
+ * \brief Checks if a given character is a valid amino acid character.
+ *
+ * \param character The character to test.
+ *
+ * \returns true if the character is valid, false otherwise.
+ */
+bool geneie_code_amino_char_valid(char character);
 
 #ifdef __cplusplus
 } // extern "C"
