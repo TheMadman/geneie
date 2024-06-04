@@ -1,6 +1,6 @@
 #include "geneie/code.h"
 
-bool geneie_code_char_valid(char c)
+bool geneie_code_nucleic_char_valid(char c)
 {
 	switch (c) {
 		case GENEIE_CODE_ADENINE:
@@ -27,10 +27,10 @@ bool geneie_code_char_valid(char c)
 	}
 }
 
-bool geneie_code_string_valid(const char *string)
+bool geneie_code_nucleic_string_valid(const char *string)
 {
 	for (; *string; string++)
-		if (!geneie_code_char_valid(*string))
+		if (!geneie_code_nucleic_char_valid(*string))
 			return false;
 	return true;
 }

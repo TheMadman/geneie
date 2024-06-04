@@ -33,7 +33,7 @@ extern "C" {
  */
 
 /**
- * \brief Represents a DNA, mRNA, etc. sequence.
+ * \brief Represents a sequence of codes, defined in code.h.
  *
  * These objects are intended to always be heap-allocated.
  * Constructing these objects from strings, from

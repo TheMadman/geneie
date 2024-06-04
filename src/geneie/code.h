@@ -30,9 +30,12 @@ extern "C" {
  */
 
 /**
- * \brief The type for storing IUPAC nucleic acid codes.
+ * \brief The type for storing IUPAC nucleic acid codes
+ * 	and IUPAC amino acid codes.
  */
 typedef char geneie_code;
+
+// Nucleic acid codes
 // Unambiguous codes
 #define GENEIE_CODE_ADENINE 'A'
 #define GENEIE_CODE_CYTOSINE 'C'
@@ -59,22 +62,22 @@ typedef char geneie_code;
 
 /**
  * \brief Checks if a given null-terminated character string contains
- * 	exclusively valid sequence codes.
+ * 	exclusively valid neucleic acid codes.
  *
  * \param string The string to test.
  *
  * \returns true if the seqeunce is valid, false otherwise.
  */
-bool geneie_code_string_valid(const char *string);
+bool geneie_code_nucleic_string_valid(const char *string);
 
 /**
- * \brief Checks if a given character is a valid sequence character.
+ * \brief Checks if a given character is a valid nucleic acid character.
  *
  * \param character The character to test.
  *
  * \returns true if the character is valid, false otherwise.
  */
-bool geneie_code_char_valid(char character);
+bool geneie_code_nucleic_char_valid(char character);
 
 #ifdef __cplusplus
 } // extern "C"

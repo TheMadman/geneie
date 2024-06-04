@@ -32,7 +32,7 @@ static bool in(char c, const char *str)
 void test_char_valid_success()
 {
 	for (const char *current = VALID_CHARS; *current; current++) {
-		assert(geneie_code_char_valid(*current));
+		assert(geneie_code_nucleic_char_valid(*current));
 	}
 }
 
@@ -41,17 +41,17 @@ void test_char_valid_fail()
 	// just testing the ASCII printable character range for now
 	for (char current = ' '; current != '~'; current++)
 		if (!in(current, VALID_CHARS))
-			assert(!geneie_code_char_valid(current));
+			assert(!geneie_code_nucleic_char_valid(current));
 }
 
 void test_string_valid_success()
 {
-	assert(geneie_code_string_valid(VALID_CHARS));
+	assert(geneie_code_nucleic_string_valid(VALID_CHARS));
 }
 
 void test_string_valid_fail()
 {
-	assert(!geneie_code_string_valid("Camel"));
+	assert(!geneie_code_nucleic_string_valid("Camel"));
 }
 
 int main()

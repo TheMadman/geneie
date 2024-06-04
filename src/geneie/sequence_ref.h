@@ -34,7 +34,8 @@ extern "C" {
  */
 
 /**
- * \brief Represents a DNA, mRNA, etc. sequence.
+ * \brief Represents a sequence of codes, defined in
+ * 	codes.h.
  *
  * These sequence objects are non-owning - that is,
  * when you construct these objects with a string,
@@ -71,7 +72,7 @@ struct geneie_sequence_ref {
 #define geneie_sequence_ref_from_literal(string_literal) \
 ((struct geneie_sequence_ref) { \
 	sizeof(string_literal) - 1, \
-	geneie_code_string_valid(string_literal) ? \
+	geneie_code_nucleic_string_valid(string_literal) ? \
 		(geneie_code *const)string_literal : \
 		NULL, \
 })
