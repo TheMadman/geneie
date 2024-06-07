@@ -52,10 +52,39 @@ void test_nuceic_string_valid_fail()
 	assert(!geneie_code_nucleic_string_valid("Camel"));
 }
 
+void test_amino_char_valid_success()
+{
+	for (const char *current = VALID_AMINO_CHARS; *current; current++) {
+		assert(geneie_code_amino_char_valid(*current));
+	}
+}
+
+void test_amino_char_valid_fail()
+{
+	for (char current = ' '; current != '~'; current++)
+		if (!in(current, VALID_AMINO_CHARS))
+			assert(!geneie_code_amino_char_valid(current));
+}
+
+void test_amino_string_valid_success()
+{
+	assert(geneie_code_amino_string_valid(VALID_AMINO_CHARS));
+}
+
+void test_amino_string_valid_fail()
+{
+	assert(!geneie_code_amino_string_valid("Camel"));
+}
+
 int main()
 {
 	test_nucleic_char_valid_success();
 	test_nucleic_char_valid_fail();
 	test_nuceic_string_valid_success();
 	test_nuceic_string_valid_fail();
+
+	test_amino_char_valid_success();
+	test_amino_char_valid_fail();
+	test_amino_string_valid_success();
+	test_amino_string_valid_fail();
 }
