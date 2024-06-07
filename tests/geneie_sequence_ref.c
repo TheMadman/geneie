@@ -19,12 +19,12 @@
 #include "test_macros.h"
 #include "geneie/sequence_ref.h"
 
-#define VALID_CHARS "ACGTURYKMSWBDHVNX-"
+#define VALID_NUCLEIC_CHARS "ACGTURYKMSWBDHVNX-"
 
 void test_from_literal_success()
 {
 	struct geneie_sequence_ref
-		result = geneie_sequence_ref_from_literal(VALID_CHARS);
+		result = geneie_sequence_ref_from_literal(VALID_NUCLEIC_CHARS);
 
 	assert(geneie_sequence_ref_valid(result));
 }
@@ -40,7 +40,7 @@ void test_from_literal_fail()
 void test_from_string_success()
 {
 	struct geneie_sequence_ref
-		result = geneie_sequence_ref_from_string(VALID_CHARS);
+		result = geneie_sequence_ref_from_string(VALID_NUCLEIC_CHARS);
 
 	assert(geneie_sequence_ref_valid(result));
 }
@@ -56,8 +56,8 @@ void test_from_string_fail()
 void test_equal_success()
 {
 	struct geneie_sequence_ref
-		first = geneie_sequence_ref_from_string(VALID_CHARS),
-		second = geneie_sequence_ref_from_string(VALID_CHARS);
+		first = geneie_sequence_ref_from_string(VALID_NUCLEIC_CHARS),
+		second = geneie_sequence_ref_from_string(VALID_NUCLEIC_CHARS);
 
 	assert(geneie_sequence_ref_equal(first, second));
 }
@@ -67,7 +67,7 @@ void test_equal_fail()
 	{
 		// different lengths
 		struct geneie_sequence_ref
-			first = geneie_sequence_ref_from_string(VALID_CHARS),
+			first = geneie_sequence_ref_from_string(VALID_NUCLEIC_CHARS),
 			second = geneie_sequence_ref_from_string("AACGTAG");
 
 		assert(!geneie_sequence_ref_equal(first, second));

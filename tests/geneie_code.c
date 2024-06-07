@@ -19,8 +19,6 @@
 #include "test_macros.h"
 #include "geneie/code.h"
 
-#define VALID_CHARS "ACGTURYKMSWBDHVNX-"
-
 static bool in(char c, const char *str)
 {
 	for (; *str; str++)
@@ -29,35 +27,35 @@ static bool in(char c, const char *str)
 	return false;
 }
 
-void test_char_valid_success()
+void test_nucleic_char_valid_success()
 {
-	for (const char *current = VALID_CHARS; *current; current++) {
+	for (const char *current = VALID_NUCLEIC_CHARS; *current; current++) {
 		assert(geneie_code_nucleic_char_valid(*current));
 	}
 }
 
-void test_char_valid_fail()
+void test_nucleic_char_valid_fail()
 {
 	// just testing the ASCII printable character range for now
 	for (char current = ' '; current != '~'; current++)
-		if (!in(current, VALID_CHARS))
+		if (!in(current, VALID_NUCLEIC_CHARS))
 			assert(!geneie_code_nucleic_char_valid(current));
 }
 
-void test_string_valid_success()
+void test_nuceic_string_valid_success()
 {
-	assert(geneie_code_nucleic_string_valid(VALID_CHARS));
+	assert(geneie_code_nucleic_string_valid(VALID_NUCLEIC_CHARS));
 }
 
-void test_string_valid_fail()
+void test_nuceic_string_valid_fail()
 {
 	assert(!geneie_code_nucleic_string_valid("Camel"));
 }
 
 int main()
 {
-	test_char_valid_success();
-	test_char_valid_fail();
-	test_string_valid_success();
-	test_string_valid_fail();
+	test_nucleic_char_valid_success();
+	test_nucleic_char_valid_fail();
+	test_nuceic_string_valid_success();
+	test_nuceic_string_valid_fail();
 }

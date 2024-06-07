@@ -20,4 +20,4 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define VALID_CHARS "ACGTURYKMSWBDHVNX-"
+#define VALID_NUCLEIC_CHARS "ACGTURYKMSWBDHVNX-"

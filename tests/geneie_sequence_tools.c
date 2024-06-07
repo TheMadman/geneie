@@ -30,7 +30,7 @@
 void test_ref_from_sequence()
 {
 	struct geneie_sequence
-		sequence = from_string(VALID_CHARS);
+		sequence = from_string(VALID_NUCLEIC_CHARS);
 
 	assert(geneie_sequence_valid(sequence));
 
@@ -47,7 +47,7 @@ void test_sequence_from_ref()
 {
 	{
 		struct geneie_sequence_ref
-			string_ref = ref_from_literal(VALID_CHARS);
+			string_ref = ref_from_literal(VALID_NUCLEIC_CHARS);
 
 		struct geneie_sequence
 			sequence = sequence_from_ref(string_ref);
@@ -113,7 +113,7 @@ struct geneie_sequence_ref splice_G(struct geneie_sequence_ref strand, void *par
 void test_splice()
 {
 	{
-		char dna[] = VALID_CHARS;
+		char dna[] = VALID_NUCLEIC_CHARS;
 
 		struct geneie_sequence_ref sequence = ref_from_string(dna);
 

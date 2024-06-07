@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-#define VALID_CHARS "ACGTURYKMSWBDHVNX-"
+#define VALID_NUCLEIC_CHARS "ACGTURYKMSWBDHVNX-"
 
 void test_alloc_success()
 {
@@ -37,12 +37,12 @@ void test_alloc_success()
 
 void test_from_string_success()
 {
-	struct geneie_sequence result = geneie_sequence_from_string(VALID_CHARS);
+	struct geneie_sequence result = geneie_sequence_from_string(VALID_NUCLEIC_CHARS);
 
 	assert(geneie_sequence_valid(result));
 
 	// length shouldn't consider the null pointer
-	assert(result.length == sizeof(VALID_CHARS) - 1);
+	assert(result.length == sizeof(VALID_NUCLEIC_CHARS) - 1);
 
 	geneie_sequence_free(result);
 }
@@ -56,7 +56,7 @@ void test_from_string_fail()
 
 void test_copy_success()
 {
-	struct geneie_sequence result = geneie_sequence_from_string(VALID_CHARS);
+	struct geneie_sequence result = geneie_sequence_from_string(VALID_NUCLEIC_CHARS);
 
 	assert(result.codes);
 
