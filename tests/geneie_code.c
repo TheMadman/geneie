@@ -42,12 +42,12 @@ void test_nucleic_char_valid_fail()
 			assert(!geneie_code_nucleic_char_valid(current));
 }
 
-void test_nuceic_string_valid_success()
+void test_nucleic_string_valid_success()
 {
 	assert(geneie_code_nucleic_string_valid(VALID_NUCLEIC_CHARS));
 }
 
-void test_nuceic_string_valid_fail()
+void test_nucleic_string_valid_fail()
 {
 	assert(!geneie_code_nucleic_string_valid("Camel"));
 }
@@ -80,8 +80,8 @@ int main()
 {
 	test_nucleic_char_valid_success();
 	test_nucleic_char_valid_fail();
-	test_nuceic_string_valid_success();
-	test_nuceic_string_valid_fail();
+	test_nucleic_string_valid_success();
+	test_nucleic_string_valid_fail();
 
 	test_amino_char_valid_success();
 	test_amino_char_valid_fail();
