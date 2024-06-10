@@ -117,6 +117,26 @@ bool geneie_sequence_ref_equal(
 	struct geneie_sequence_ref second
 );
 
+/**
+ * \brief Takes the reference and an index and returns
+ * 	a new reference, starting from that location
+ * 	in the original reference.
+ *
+ * No input validation is performed. You should ensure the
+ * reference you are passing is valid with a
+ * geneie_sequence_ref_valid() call before attempting to
+ * use it.
+ *
+ * \param ref The reference to index into.
+ * \param index The indexto begin the new reference at.
+ *
+ * \returns A reference starting from the index.
+ */
+struct geneie_sequence_ref geneie_sequence_ref_index(
+	struct geneie_sequence_ref ref,
+	ssize_t index
+);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

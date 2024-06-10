@@ -6,7 +6,8 @@
 
 bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence)
 {
-	return sequence.codes != NULL;
+	return sequence.codes != NULL
+		&& sequence.length >= 0;
 }
 
 struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)
@@ -37,5 +38,16 @@ bool geneie_sequence_ref_equal(
 			return false;
 
 	return true;
+}
+
+struct geneie_sequence_ref geneie_sequence_ref_index(
+	struct geneie_sequence_ref ref,
+	ssize_t index
+)
+{
+	return (struct geneie_sequence_ref) {
+		ref.length - index,
+		ref.codes + index,
+	};
 }
 

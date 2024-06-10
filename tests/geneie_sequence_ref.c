@@ -83,6 +83,16 @@ void test_equal_fail()
 	}
 }
 
+void test_index()
+{
+	struct geneie_sequence_ref
+		start = geneie_sequence_ref_from_string(VALID_NUCLEIC_CHARS),
+		result = geneie_sequence_ref_index(start, 4);
+
+	assert(result.length == start.length - 4);
+	assert(result.codes == &start.codes[4]);
+}
+
 int main()
 {
 	test_from_literal_success();
@@ -91,5 +101,6 @@ int main()
 	test_from_string_fail();
 	test_equal_success();
 	test_equal_fail();
+	test_index();
 }
 
