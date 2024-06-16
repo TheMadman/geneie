@@ -56,7 +56,7 @@ struct geneie_sequence_ref {
 	/**
 	 * \brief The beginning of the gene sequence.
 	 */
-	geneie_code *const codes;
+	geneie_code *codes;
 };
 
 /**

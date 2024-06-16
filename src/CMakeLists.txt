@@ -1,5 +1,6 @@
 set(SOURCES
 	code.c
+	encoding.c
 	sequence_ref.c
 	sequence.c
 	sequence_tools.c
