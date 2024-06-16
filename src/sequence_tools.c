@@ -2,33 +2,34 @@
 
 #include <string.h>
 
-static const struct geneie_sequence invalid_sequence = { 0 };
+typedef struct geneie_sequence seq;
+typedef struct geneie_sequence_ref seq_r;
 
-struct geneie_sequence_ref
-geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence)
+static const seq invalid_sequence = { 0 };
+
+seq_r geneie_sequence_tools_ref_from_sequence(seq sequence)
 {
-	return (struct geneie_sequence_ref) {
+	return (seq_r) {
 		sequence.length,
 		sequence.codes,
 	};
 }
 
-struct geneie_sequence
-geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference)
+seq geneie_sequence_tools_sequence_from_ref(seq_r reference)
 {
 	if (!geneie_sequence_ref_valid(reference))
 		return invalid_sequence;
 
-	struct geneie_sequence result = geneie_sequence_alloc(reference.length);
+	seq result = geneie_sequence_alloc(reference.length);
 
 	if (!geneie_sequence_valid(result))
 		return invalid_sequence;
 
-	memcpy(result.codes, reference.codes, reference.length);
+	memcpy(result.codes, reference.codes, (size_t)reference.length);
 	return result;
 }
 
-void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference)
+void geneie_sequence_tools_dna_to_premrna(seq_r reference)
 {
 	const geneie_code *const end = &reference.codes[reference.length];
 	for (
@@ -41,8 +42,8 @@ void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference)
 	}
 }
 
-struct geneie_sequence_ref geneie_sequence_tools_splice(
-	struct geneie_sequence_ref strand,
+seq_r geneie_sequence_tools_splice(
+	seq_r strand,
 	geneie_sequence_tools_splicer *splicer_func,
 	void *state
 )
@@ -50,20 +51,19 @@ struct geneie_sequence_ref geneie_sequence_tools_splice(
 	if (strand.length <= 0)
 		return strand;
 
-	struct geneie_sequence_ref to_splice = splicer_func(strand, state);
+	seq_r to_splice = splicer_func(strand, state);
 
 	if (to_splice.length <= 0)
 		return strand;
 
 	geneie_code *const to_move = &to_splice.codes[to_splice.length];
 	const ssize_t remainder_length = strand.length - (to_move - strand.codes);
-	struct geneie_sequence_ref remainder = {
+	seq_r remainder = {
 		.length = remainder_length,
 		.codes = to_move,
 	};
 
-	struct geneie_sequence_ref
-	remainder_after_futures = geneie_sequence_tools_splice(
+	seq_r remainder_after_futures = geneie_sequence_tools_splice(
 		remainder,
 		splicer_func,
 		state
@@ -71,13 +71,13 @@ struct geneie_sequence_ref geneie_sequence_tools_splice(
 
 	const ssize_t amount_to_move = remainder_after_futures.length;
 
-	memcpy(to_splice.codes, to_move, amount_to_move);
+	memmove(to_splice.codes, to_move, (size_t)amount_to_move);
 
 	const ssize_t
 		amount_before_splice = (to_splice.codes - strand.codes),
 		amount_after_splice = remainder_after_futures.length;
 
-	struct geneie_sequence_ref result = {
+	seq_r result = {
 		amount_before_splice + amount_after_splice,
 		strand.codes,
 	};

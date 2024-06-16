@@ -3,6 +3,7 @@
 #include "geneie/code.h"
 
 #include <string.h>
+#include <limits.h>
 
 bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence)
 {
@@ -12,7 +13,12 @@ bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence)
 
 struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)
 {
-	const ssize_t length = strlen(string);
+	const size_t strlen_result = strlen(string);
+
+	if (strlen_result > SSIZE_MAX)
+		return (struct geneie_sequence_ref){ 0 };
+
+	const ssize_t length = (ssize_t)strlen_result;
 	const bool valid = geneie_code_nucleic_string_valid(string);
 	return (struct geneie_sequence_ref) {
 		length,

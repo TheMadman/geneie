@@ -63,7 +63,7 @@ void test_copy_success()
 	struct geneie_sequence copy = geneie_sequence_copy(result);
 
 	assert(copy.length == result.length);
-	assert(!memcmp(copy.codes, result.codes, copy.length));
+	assert(!memcmp(copy.codes, result.codes, (size_t)copy.length));
 
 	geneie_sequence_free(result);
 	geneie_sequence_free(copy);

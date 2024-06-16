@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 bool geneie_sequence_valid(struct geneie_sequence sequence)
 {
@@ -10,27 +11,33 @@ bool geneie_sequence_valid(struct geneie_sequence sequence)
 
 struct geneie_sequence geneie_sequence_alloc(ssize_t length)
 {
+	if (length < 0)
+		return (struct geneie_sequence) { 0 };
+
 	const struct geneie_sequence result = {
 		length,
-		malloc(length)
+		malloc((size_t)length)
 	};
 	return result;
 }
 
 struct geneie_sequence geneie_sequence_from_string(const char *string)
 {
-	if (!geneie_code_nucleic_string_valid(string)) {
+	if (!geneie_code_nucleic_string_valid(string))
 		return (struct geneie_sequence) {
 			0,
 			NULL,
 		};
-	}
 
-	const ssize_t length = strlen(string);
+	const size_t strlen_result = strlen(string);
+	if (strlen_result > SSIZE_MAX)
+		return (struct geneie_sequence) { 0 };
+
+	const ssize_t length = (ssize_t)strlen_result;
 	struct geneie_sequence result = geneie_sequence_alloc(length);
 
 	if (geneie_sequence_valid(result))
-		memcpy(result.codes, string, length);
+		memcpy(result.codes, string, strlen_result);
 
 	return result;
 }
@@ -41,8 +48,10 @@ struct geneie_sequence geneie_sequence_copy(struct geneie_sequence other)
 
 	struct geneie_sequence result = geneie_sequence_alloc(length);
 
+	// No ssize_t < 0 check, because I'm assuming other
+	// has been constructed by a function that's done that already
 	if (geneie_sequence_valid(result))
-		memcpy(result.codes, other.codes, length);
+		memcpy(result.codes, other.codes, (size_t)length);
 
 	return result;
 }
