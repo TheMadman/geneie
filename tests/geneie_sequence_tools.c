@@ -54,7 +54,7 @@ void test_sequence_from_ref()
 
 		assert(geneie_sequence_valid(sequence));
 		assert(sequence.length == string_ref.length);
-		assert(!memcmp(sequence.codes, string_ref.codes, string_ref.length));
+		assert(!memcmp(sequence.codes, string_ref.codes, (size_t)string_ref.length));
 	}
 
 	{
