@@ -34,7 +34,7 @@ extern "C" {
  * 	a list of codes that will match, including
  * 	ambiguous codes.
  *
- * For example, passing "UC" will return "TCUY". Passing
+ * For example, passing "UC" will return "CTUY". Passing
  * "UCAG" will return a list including every ambiguous
  * code, except '-'.
  *
