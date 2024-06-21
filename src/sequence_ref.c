@@ -57,3 +57,13 @@ struct geneie_sequence_ref geneie_sequence_ref_index(
 	};
 }
 
+bool geneie_sequence_ref_in(
+	struct geneie_sequence_ref ref,
+	geneie_code code
+)
+{
+	for (; ref.length; ref.length--, ref.codes++)
+		if (*ref.codes == code)
+			return true;
+	return false;
+}

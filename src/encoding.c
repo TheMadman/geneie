@@ -12,13 +12,7 @@ typedef struct geneie_sequence_ref ref;
 #define HAS_G (1 << 2)
 #define HAS_TU (1 << 3)
 
-static bool in(ref sequence, geneie_code c)
-{
-	for (; sequence.length; sequence.codes++, sequence.length--)
-		if (c == *sequence.codes)
-			return true;
-	return false;
-}
+#define in geneie_sequence_ref_in
 
 static bool has_a(ref sequence)
 {

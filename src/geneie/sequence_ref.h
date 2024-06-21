@@ -137,6 +137,23 @@ struct geneie_sequence_ref geneie_sequence_ref_index(
 	ssize_t index
 );
 
+/**
+ * \brief Searches the given reference for the given code.
+ *
+ * This function does not perform input validation: you
+ * should make sure your reference is valid by calling
+ * geneie_sequence_ref_valid() before using it.
+ *
+ * \param ref The reference to search in.
+ * \param code The code to search for.
+ *
+ * \returns True if the code is present, false if not.
+ */
+bool geneie_sequence_ref_in(
+	struct geneie_sequence_ref ref,
+	geneie_code code
+);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
