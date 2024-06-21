@@ -55,7 +55,7 @@ extern "C" {
  *
  * \returns The codes that will match the given codes.
  */
-struct geneie_sequence_ref geneie_encode_get_valid_codes(
+struct geneie_sequence_ref geneie_encoding_get_valid_codes(
 	struct geneie_sequence_ref codes
 );
 

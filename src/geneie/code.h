@@ -81,6 +81,7 @@ typedef char geneie_code;
 #define GENEIE_CODE_VALINE 'V'
 #define GENEIE_CODE_TRYPTOPHAN 'W'
 #define GENEIE_CODE_TYROSINE 'Y'
+#define GENEIE_CODE_STOP '\0'
 
 /**
  * \brief Checks if a given null-terminated character string contains

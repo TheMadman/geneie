@@ -63,7 +63,7 @@ static bool has_tu(ref sequence)
 		|| in(sequence, GENEIE_CODE_ANY);
 }
 
-ref geneie_encode_get_valid_codes(ref codes)
+ref geneie_encoding_get_valid_codes(ref codes)
 {
 	int checks = has_a(codes)
 		| has_c(codes) << 1

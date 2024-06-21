@@ -54,7 +54,7 @@ void test_a(void)
 	ref a = ref("A");
 	const ref expectation = ref("A");
 
-	ref result = geneie_encode_get_valid_codes(a);
+	ref result = geneie_encoding_get_valid_codes(a);
 
 	assert(matches(result, expectation));
 }
@@ -64,7 +64,7 @@ void test_c(void)
 	ref c = ref("C");
 	const ref expectation = ref("C");
 
-	ref result = geneie_encode_get_valid_codes(c);
+	ref result = geneie_encoding_get_valid_codes(c);
 
 	assert(matches(result, expectation));
 }
@@ -74,7 +74,7 @@ void test_g(void)
 	ref g = ref("G");
 	const ref expectation = ref("G");
 
-	ref result = geneie_encode_get_valid_codes(g);
+	ref result = geneie_encoding_get_valid_codes(g);
 
 	assert(matches(result, expectation));
 }
@@ -86,7 +86,7 @@ void test_tu()
 	{
 		ref tu = ref("TU");
 
-		ref result = geneie_encode_get_valid_codes(tu);
+		ref result = geneie_encoding_get_valid_codes(tu);
 
 		assert(matches(result, expectation));
 	}
@@ -94,7 +94,7 @@ void test_tu()
 	{
 		ref t = ref("T");
 
-		ref result = geneie_encode_get_valid_codes(t);
+		ref result = geneie_encoding_get_valid_codes(t);
 
 		assert(matches(result, expectation));
 	}
@@ -102,7 +102,7 @@ void test_tu()
 	{
 		ref u = ref("U");
 
-		ref result = geneie_encode_get_valid_codes(u);
+		ref result = geneie_encoding_get_valid_codes(u);
 
 		assert(matches(result, expectation));
 	}
@@ -115,7 +115,7 @@ void test_r(void)
 	{
 		ref ag = ref("AG");
 
-		ref result = geneie_encode_get_valid_codes(ag);
+		ref result = geneie_encoding_get_valid_codes(ag);
 
 		assert(matches(result, expectation));
 	}
@@ -123,7 +123,7 @@ void test_r(void)
 	{
 		ref r = ref("R");
 
-		ref result = geneie_encode_get_valid_codes(r);
+		ref result = geneie_encoding_get_valid_codes(r);
 
 		assert(matches(result, expectation));
 	}
@@ -131,7 +131,7 @@ void test_r(void)
 	{
 		ref agr = ref("AGR");
 
-		ref result = geneie_encode_get_valid_codes(agr);
+		ref result = geneie_encoding_get_valid_codes(agr);
 
 		assert(matches(result, expectation));
 	}
@@ -144,7 +144,7 @@ void test_y(void)
 	{
 		ref test = ref("CT");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -152,7 +152,7 @@ void test_y(void)
 	{
 		ref test = ref("CU");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -160,7 +160,7 @@ void test_y(void)
 	{
 		ref test = ref("CTU");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -168,7 +168,7 @@ void test_y(void)
 	{
 		ref test = ref("Y");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -176,7 +176,7 @@ void test_y(void)
 	{
 		ref test = ref("CTUY");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -189,7 +189,7 @@ void test_s(void)
 	{
 		ref test = ref("GC");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -197,7 +197,7 @@ void test_s(void)
 	{
 		ref test = ref("S");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -205,7 +205,7 @@ void test_s(void)
 	{
 		ref test = ref("GCS");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -218,7 +218,7 @@ void test_w(void)
 	{
 		ref test = ref("AT");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -226,7 +226,7 @@ void test_w(void)
 	{
 		ref test = ref("AU");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -234,7 +234,7 @@ void test_w(void)
 	{
 		ref test = ref("ATU");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -242,7 +242,7 @@ void test_w(void)
 	{
 		ref test = ref("W");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -250,7 +250,7 @@ void test_w(void)
 	{
 		ref test = ref("ATUW");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -264,7 +264,7 @@ void test_k(void)
 	{
 		ref test = ref("GT");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -272,7 +272,7 @@ void test_k(void)
 	{
 		ref test = ref("GU");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -280,7 +280,7 @@ void test_k(void)
 	{
 		ref test = ref("GTU");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -288,7 +288,7 @@ void test_k(void)
 	{
 		ref test = ref("K");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -296,7 +296,7 @@ void test_k(void)
 	{
 		ref test = ref("GTK");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -304,7 +304,7 @@ void test_k(void)
 	{
 		ref test = ref("GUK");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -312,7 +312,7 @@ void test_k(void)
 	{
 		ref test = ref("GTUK");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -325,7 +325,7 @@ void test_m(void)
 	{
 		ref test = ref("AC");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -333,7 +333,7 @@ void test_m(void)
 	{
 		ref test = ref("M");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -341,7 +341,7 @@ void test_m(void)
 	{
 		ref test = ref("ACM");
 
-		ref result = geneie_encode_get_valid_codes(test);
+		ref result = geneie_encoding_get_valid_codes(test);
 
 		assert(matches(result, expectation));
 	}
@@ -372,7 +372,7 @@ void test_b(void)
 	};
 
 	for (ref *code = codes; code->codes; code++) {
-		ref result = geneie_encode_get_valid_codes(*code);
+		ref result = geneie_encoding_get_valid_codes(*code);
 
 		assert(matches(result, expectation));
 	}
@@ -399,7 +399,7 @@ void test_d(void)
 	};
 
 	for (ref *code = codes; code->codes; code++) {
-		ref result = geneie_encode_get_valid_codes(*code);
+		ref result = geneie_encoding_get_valid_codes(*code);
 
 		assert(matches(result, expectation));
 	}
@@ -424,7 +424,7 @@ void test_h(void)
 	};
 
 	for (ref *code = codes; code->codes; code++) {
-		ref result = geneie_encode_get_valid_codes(*code);
+		ref result = geneie_encoding_get_valid_codes(*code);
 
 		assert(matches(result, expectation));
 	}
@@ -444,7 +444,7 @@ void test_v(void)
 	};
 
 	for (ref *code = codes; code->codes; code++) {
-		ref result = geneie_encode_get_valid_codes(*code);
+		ref result = geneie_encoding_get_valid_codes(*code);
 
 		assert(matches(result, expectation));
 	}
@@ -464,7 +464,7 @@ void test_n(void)
 	};
 
 	for (ref *code = codes; code->codes; code++) {
-		ref result = geneie_encode_get_valid_codes(*code);
+		ref result = geneie_encoding_get_valid_codes(*code);
 
 		assert(matches(result, expectation));
 	}
