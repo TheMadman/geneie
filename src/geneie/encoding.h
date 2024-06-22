@@ -59,6 +59,24 @@ struct geneie_sequence_ref geneie_encoding_get_valid_codes(
 	struct geneie_sequence_ref codes
 );
 
+/**
+ * \brief This function encodes a single codon from
+ * 	codon into a single amino acid character given
+ * 	by amino_out.
+ *
+ * \param codon The codon to encode an amino acid for.
+ * \param amino_out The location to write a single amino
+ * 	character to.
+ *
+ * \returns True if the encoding was successful, false
+ * 	otherwise. If the encoding failed, amino_out
+ * 	is left unchanged.
+ */
+bool geneie_encoding_one_codon(
+	struct geneie_sequence_ref codon,
+	struct geneie_sequence_ref amino_out
+);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

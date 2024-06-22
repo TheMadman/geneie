@@ -22,6 +22,8 @@
 typedef struct geneie_sequence_ref ref;
 #define ref(lit) geneie_sequence_ref_from_literal(lit)
 #define ref_str(str) geneie_sequence_ref_from_string(str)
+#define arrlen(arr) (sizeof(arr) / sizeof(arr[0]))
+#define arrend(arr) (&(arr)[arrlen(arr)])
 
 static bool in(ref sequence, char code)
 {
@@ -470,6 +472,331 @@ void test_n(void)
 	}
 }
 
+static bool all_encode(
+	geneie_code (*codons_begin)[4],
+	geneie_code (*codons_end)[4],
+	geneie_code expect
+)
+{
+	for (; codons_begin < codons_end; codons_begin++) {
+		ref current_ref = ref(*codons_begin);
+
+		if (!geneie_encoding_one_codon(current_ref, current_ref))
+			return false;
+
+		if (current_ref.codes[0] != expect)
+			return false;
+	}
+
+	return true;
+}
+
+void test_encode_a(void)
+{
+	const geneie_code expect = GENEIE_CODE_ALANINE;
+
+	// I'm not making these lists exhaustive
+	geneie_code codons[][4] = {
+		"GCT",
+		"GCU",
+		"GCC",
+		"GCA",
+		"GCG",
+		"GCR",
+		"GCN",
+	};
+
+	geneie_code (*codons_end)[4] = arrend(codons);
+
+	assert(all_encode(codons, codons_end, expect));
+}
+
+void test_encode_l(void)
+{
+	const geneie_code expect = GENEIE_CODE_LEUCINE;
+	geneie_code codons[][4] = {
+		"UUA",
+		"TTA",
+		"UUG",
+		"TTG",
+		"UUR",
+		"TTR",
+		"CUU",
+		"CUC",
+		"CUA",
+		"CUG",
+		"CTT",
+		"CTC",
+		"CTA",
+		"CTG",
+		"CTN",
+	};
+
+	geneie_code (*codons_end)[4] = arrend(codons);
+
+	assert(all_encode(codons, codons_end, expect));
+}
+
+void test_encode_s(void)
+{
+	const geneie_code expect = GENEIE_CODE_SERINE;
+	geneie_code codons[][4] = {
+		"UCU",
+		"UCC",
+		"UCA",
+		"UCG",
+		"UCN",
+		"AGU",
+		"AGC",
+		"AGY",
+		"TCT",
+		"TCC",
+		"TCA",
+		"TCG",
+		"TCN",
+		"AGT",
+	};
+
+	geneie_code (*codons_end)[4] = arrend(codons);
+	assert(all_encode(codons, codons_end, expect));
+}
+
+void test_encode_y(void)
+{
+	const geneie_code expect = GENEIE_CODE_TYROSINE;
+	geneie_code codons[][4] = {
+		"UAU",
+		"TAT",
+		"UAC",
+		"TAC",
+		"UAY",
+		"TAY",
+	};
+
+	geneie_code (*codons_end)[4] = arrend(codons);
+	assert(all_encode(codons, codons_end, expect));
+}
+
+void test_encode_0(void)
+{
+	const geneie_code expect = GENEIE_CODE_STOP;
+	geneie_code codons[][4] = {
+		"UAA",
+		"TAA",
+		"UAG",
+		"TAG",
+		"UAR",
+		"TAR",
+		"UGA",
+		"TGA",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_c(void)
+{
+	const geneie_code expect = GENEIE_CODE_CYSTEINE;
+	geneie_code codons[][4] = {
+		"UGU",
+		"TGT",
+		"UGC",
+		"TGC",
+		"UGY",
+		"TGY",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_w(void)
+{
+	const geneie_code expect = GENEIE_CODE_TRYPTOPHAN;
+	geneie_code codons[][4] = {
+		"UGG",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_p(void)
+{
+	const geneie_code expect = GENEIE_CODE_PROLINE;
+	geneie_code codons[][4] = {
+		"CCU",
+		"CCT",
+		"CCA",
+		"CCG",
+		"CCN",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_h(void)
+{
+	const geneie_code expect = GENEIE_CODE_HISTIDINE;
+	geneie_code codons[][4] = {
+		"CAU",
+		"CAT",
+		"CAC",
+		"CAY",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_q(void)
+{
+	const geneie_code expect = GENEIE_CODE_GLUTAMINE;
+	geneie_code codons[][4] = {
+		"CAA",
+		"CAG",
+		"CAR",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_r(void)
+{
+	const geneie_code expect = GENEIE_CODE_ARGININE;
+	geneie_code codons[][4] = {
+		"CGU",
+		"CGT",
+		"CGC",
+		"CGA",
+		"CGG",
+		"CGN",
+		"AGA",
+		"AGG",
+		"AGR",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_i(void)
+{
+	const geneie_code expect = GENEIE_CODE_ISOLEUCINE;
+	geneie_code codons[][4] = {
+		"AUU",
+		"AUC",
+		"AUA",
+		"AUH",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_m(void)
+{
+	const geneie_code expect = GENEIE_CODE_METHIONINE;
+	geneie_code codons[][4] = {
+		"AUG",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_t(void)
+{
+	const geneie_code expect = GENEIE_CODE_THREONINE;
+	geneie_code codons[][4] = {
+		"ACU",
+		"ACT",
+		"ACC",
+		"ACA",
+		"ACG",
+		"ACN",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_n(void)
+{
+	const geneie_code expect = GENEIE_CODE_ASPARAGINE;
+	geneie_code codons[][4] = {
+		"AAU",
+		"AAT",
+		"AAC",
+		"AAY",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_k(void)
+{
+	const geneie_code expect = GENEIE_CODE_LYSINE;
+	geneie_code codons[][4] = {
+		"AAA",
+		"AAG",
+		"AAR",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_v(void)
+{
+	const geneie_code expect = GENEIE_CODE_VALINE;
+	geneie_code codons[][4] = {
+		"GUU",
+		"GUC",
+		"GUA",
+		"GUG",
+		"GUN",
+		"GTT",
+		"GTC",
+		"GTA",
+		"GTG",
+		"GTN",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_d(void)
+{
+	const geneie_code expect = GENEIE_CODE_ASPARTIC_ACID;
+	geneie_code codons[][4] = {
+		"GAU",
+		"GAT",
+		"GAC",
+		"GAY",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_e(void)
+{
+	const geneie_code expect = GENEIE_CODE_GLUTAMIC_ACID;
+	geneie_code codons[][4] = {
+		"GAA",
+		"GAG",
+		"GAR",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
+void test_encode_g(void)
+{
+	const geneie_code expect = GENEIE_CODE_GLYCINE;
+	geneie_code codons[][4] = {
+		"GGU",
+		"GGT",
+		"GGA",
+		"GGG",
+		"GGN",
+	};
+
+	assert(all_encode(codons, arrend(codons), expect));
+}
+
 int main()
 {
 	test_a();
@@ -486,4 +813,25 @@ int main()
 	test_h();
 	test_v();
 	test_n();
+
+	test_encode_a();
+	test_encode_l();
+	test_encode_s();
+	test_encode_y();
+	test_encode_0();
+	test_encode_c();
+	test_encode_w();
+	test_encode_p();
+	test_encode_h();
+	test_encode_q();
+	test_encode_r();
+	test_encode_i();
+	test_encode_m();
+	test_encode_t();
+	test_encode_n();
+	test_encode_k();
+	test_encode_v();
+	test_encode_d();
+	test_encode_e();
+	test_encode_g();
 }
