@@ -138,6 +138,23 @@ struct geneie_sequence_ref geneie_sequence_ref_index(
 );
 
 /**
+ * \brief Takes the given reference and returns a new
+ * 	reference with the length set to the given
+ * 	length.
+ *
+ * Does not modify or destroy the original memory.
+ *
+ * \param ref The reference to truncate.
+ * \param length The new length to truncate to.
+ *
+ * \returns A new reference, with the given length.
+ */
+struct geneie_sequence_ref geneie_sequence_ref_trunc(
+	struct geneie_sequence_ref ref,
+	ssize_t new_size
+);
+
+/**
  * \brief Searches the given reference for the given code.
  *
  * This function does not perform input validation: you

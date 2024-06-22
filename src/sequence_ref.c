@@ -57,6 +57,17 @@ struct geneie_sequence_ref geneie_sequence_ref_index(
 	};
 }
 
+struct geneie_sequence_ref geneie_sequence_ref_trunc(
+	struct geneie_sequence_ref ref,
+	ssize_t new_size
+)
+{
+	return (struct geneie_sequence_ref) {
+		.length = (ssize_t)new_size,
+		.codes = ref.codes,
+	};
+}
+
 bool geneie_sequence_ref_in(
 	struct geneie_sequence_ref ref,
 	geneie_code code
