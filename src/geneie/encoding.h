@@ -64,6 +64,15 @@ struct geneie_sequence_ref geneie_encoding_get_valid_codes(
  * 	codon into a single amino acid character given
  * 	by amino_out.
  *
+ * If the codon contains a gap of indeterminate length,
+ * or an ambiguous code that does not resolve to a single
+ * amino acid unambiguously, then the encoding will fail
+ * and nothing will be written to amino_out.
+ *
+ * If either the codon or the amino_out are not long
+ * enough, the encoding will fail and nothing will be
+ * written to amino_out.
+ *
  * \param codon The codon to encode an amino acid for.
  * \param amino_out The location to write a single amino
  * 	character to.

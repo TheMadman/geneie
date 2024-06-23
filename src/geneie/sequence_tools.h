@@ -49,14 +49,14 @@ geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence);
  * 	given sequence reference.
  *
  * If the reference doesn't pass geneie_sequence_ref_valid(),
- * a NULL pointer is returned.
+ * an invalid sequence is returned.
  *
- * A NULL pointer is also returned if allocation failed.
+ * An invalid sequence is also returned if allocation failed.
  *
  * \param reference The reference to create a copy from.
  *
- * \returns A pointer to the newly allocated sequence, or
- * 	NULL if an error occurred.
+ * \returns The newly constructed geneie sequence, or
+ * 	a sequence failing geneie_sequence_valid() on failure.
  */
 struct geneie_sequence
 geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference);
