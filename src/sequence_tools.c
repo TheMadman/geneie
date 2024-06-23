@@ -2,8 +2,16 @@
 
 #include <string.h>
 
+#include "geneie/code.h"
+#include "geneie/encoding.h"
+
 typedef struct geneie_sequence seq;
 typedef struct geneie_sequence_ref seq_r;
+typedef struct geneie_sequence_tools_ref_pair seq_r_pair;
+
+#define index geneie_sequence_ref_index
+#define trunc geneie_sequence_ref_trunc
+#define one_codon geneie_encoding_one_codon
 
 static const seq invalid_sequence = { 0 };
 
@@ -83,5 +91,29 @@ seq_r geneie_sequence_tools_splice(
 	};
 
 	return result;
+}
+
+
+seq_r_pair geneie_sequence_tools_encode(seq_r strand)
+{
+	ssize_t i = 0;
+
+	for (;; i++) {
+		seq_r
+			current_in = index(strand, i * 3),
+			current_out = index(strand, i);
+
+		if (!one_codon(current_in, current_out))
+			break;
+		if (current_out.codes[0] == GENEIE_CODE_STOP) {
+			// include the stop code in the output
+			i++;
+			break;
+		}
+	}
+
+	return (seq_r_pair) {
+		{ trunc(strand, i), index(strand, i * 3) },
+	};
 }
 

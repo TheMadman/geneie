@@ -121,6 +121,34 @@ struct geneie_sequence_ref geneie_sequence_tools_splice(
 	void *param
 );
 
+/**
+ * \brief Provides a pair of references.
+ */
+struct geneie_sequence_tools_ref_pair {
+	struct geneie_sequence_ref refs[2];
+};
+
+/**
+ * \brief Encodes mRNA sequences into amino acid sequences
+ * 	in-place.
+ *
+ * Stops when one of the following conditions are met:
+ *
+ * - A codon encodes to a stop sequence
+ * - A codon contains ambiguous mRNA codes that do not
+ *   resolve unambiguously to a single amino acid
+ * - A codon contains a gap of indeterminate length
+ *
+ * \param strand The mRNA strand to encode.
+ *
+ * \returns A pair of new references, the first containing
+ * 	the encoded amino acid sequence and the second
+ * 	containing the remaining strand.
+ */
+struct geneie_sequence_tools_ref_pair geneie_sequence_tools_encode(
+	struct geneie_sequence_ref strand
+);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

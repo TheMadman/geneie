@@ -27,7 +27,10 @@
 #define ref_from_literal geneie_sequence_ref_from_literal
 #define ref_from_string geneie_sequence_ref_from_string
 
-void test_ref_from_sequence()
+typedef struct geneie_sequence_ref ref;
+typedef struct geneie_sequence_tools_ref_pair ref_pair;
+
+void test_ref_from_sequence(void)
 {
 	struct geneie_sequence
 		sequence = from_string(VALID_NUCLEIC_CHARS);
@@ -43,7 +46,7 @@ void test_ref_from_sequence()
 	geneie_sequence_free(sequence);
 }
 
-void test_sequence_from_ref()
+void test_sequence_from_ref(void)
 {
 	{
 		struct geneie_sequence_ref
@@ -67,7 +70,7 @@ void test_sequence_from_ref()
 	}
 }
 
-void test_dna_to_premrna()
+void test_dna_to_premrna(void)
 {
 	{
 		char dna[] = "ACGTRYKMSWBDHVNX-";
@@ -110,7 +113,7 @@ struct geneie_sequence_ref splice_G(struct geneie_sequence_ref strand, void *par
 	return (struct geneie_sequence_ref) { 0 };
 }
 
-void test_splice()
+void test_splice(void)
 {
 	{
 		char dna[] = VALID_NUCLEIC_CHARS;
@@ -140,10 +143,40 @@ void test_splice()
 	}
 }
 
+void test_encode(void)
+{
+	{
+		char buffer[] = "AUGUAUUAA";
+		ref input = ref_from_literal(buffer);
+
+		ref expected_aminos = ref_from_literal("MY\0");
+
+		ref_pair result = geneie_sequence_tools_encode(input);
+
+		assert(geneie_sequence_ref_equal(expected_aminos, result.refs[0]));
+
+		assert(result.refs[1].length == 0);
+	}
+
+	{
+		char buffer[] = "AUGUAU-UAA";
+		ref input = ref_from_literal(buffer);
+
+		ref expected_aminos = ref_from_literal("MY");
+		ref expected_nucleotides = ref_from_literal("-UAA");
+
+		ref_pair result = geneie_sequence_tools_encode(input);
+
+		assert(geneie_sequence_ref_equal(expected_aminos, result.refs[0]));
+		assert(geneie_sequence_ref_equal(expected_nucleotides, result.refs[1]));
+	}
+}
+
 int main()
 {
 	test_ref_from_sequence();
 	test_sequence_from_ref();
 	test_dna_to_premrna();
 	test_splice();
+	test_encode();
 }
