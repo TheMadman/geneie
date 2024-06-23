@@ -797,6 +797,14 @@ void test_encode_g(void)
 	assert(all_encode(codons, arrend(codons), expect));
 }
 
+void test_encode_gap(void)
+{
+	geneie_code codon[] = "AA-";
+	ref reference = ref(codon);
+
+	assert(!geneie_encoding_one_codon(reference, reference));
+}
+
 int main()
 {
 	test_a();
@@ -834,4 +842,5 @@ int main()
 	test_encode_d();
 	test_encode_e();
 	test_encode_g();
+	test_encode_gap();
 }
