@@ -1,7 +1,19 @@
 #include <stdio.h>
+#include <ctype.h>
 
 #include <geneie.h>
 
+/*
+ * If you read the tests in the tests/ directory,
+ * we avoid having to use the long names of functions
+ * by using #define to give them a shorter name.
+ *
+ * We recommend only doing this in your .c files.
+ *
+ * Here, however, we use the full names of functions
+ * in the code below, so that links to their documentation
+ * are generated correctly.
+ */
 typedef struct geneie_sequence_ref ref;
 
 /*
@@ -23,13 +35,19 @@ int main()
 		char codon_store[4] = { 0 };
 		char *codon_end = &codon_store[3];
 
-		for (char *current = codon_store; current < codon_end; current++) {
+		// If we find a space, we want to skip it, so
+		// the current++ is inside the loop body
+		for (char *current = codon_store; current < codon_end;) {
 			const int input = getchar();
 
 			if (input == EOF)
 				return 0;
 
+			if (isspace(input))
+				continue;
+
 			*current = (char)input;
+			current++;
 		}
 
 		// In this case, you _could_ opt to use
@@ -39,7 +57,8 @@ int main()
 		ref codon = geneie_sequence_ref_from_string(codon_store);
 
 		// geneie_sequence_ref_from_string() and _from_literal() will
-		// check if the passed string consists of valid nucleotide codes.
+		// check if the passed string consists of valid nucleotide or
+		// amino codes.
 		//
 		// If the string contains invalid codes, it will fail a call to
 		// geneie_sequence_ref_valid().
