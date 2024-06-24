@@ -60,6 +60,24 @@ struct geneie_sequence_ref {
 };
 
 /**
+ * \brief Creates a reference from a raw array, skipping
+ * 	validity checks.
+ *
+ * Use this if you have better reason to believe the sequence
+ * is valid, such as if it is hard-coded; or if you intend
+ * to use the sequence as an output parameter. Otherwise,
+ * always prefer geneie_sequence_ref_from_literal() or
+ * geneie_sequence_ref_from_string(), followed by a
+ * geneie_sequence_ref_valid() call.
+ *
+ * \param array The array to create a reference from.
+ *
+ * \returns A reference set to the length of the array.
+ */
+#define geneie_sequence_ref_from_array_unsafe(array) \
+((struct geneie_sequence_ref) { sizeof(array), (array) })
+
+/**
  * \brief Constructs a geneie_sequence_ref from a C string literal.
  *
  * \param string_literal A C string literal, such as `"ACGT"`.
