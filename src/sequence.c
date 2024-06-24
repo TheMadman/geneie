@@ -23,7 +23,9 @@ struct geneie_sequence geneie_sequence_alloc(ssize_t length)
 
 struct geneie_sequence geneie_sequence_from_string(const char *string)
 {
-	if (!geneie_code_nucleic_string_valid(string))
+	const bool valid = geneie_code_nucleic_string_valid(string)
+		|| geneie_code_amino_string_valid(string);
+	if (!valid)
 		return (struct geneie_sequence) {
 			0,
 			NULL,

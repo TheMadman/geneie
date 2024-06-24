@@ -90,7 +90,8 @@ struct geneie_sequence_ref {
 #define geneie_sequence_ref_from_literal(string_literal) \
 ((struct geneie_sequence_ref) { \
 	sizeof(string_literal) - 1, \
-	geneie_code_nucleic_string_valid(string_literal) ? \
+	geneie_code_nucleic_string_valid(string_literal) \
+	|| geneie_code_amino_string_valid(string_literal) ? \
 		(geneie_code *const)string_literal : \
 		NULL, \
 })

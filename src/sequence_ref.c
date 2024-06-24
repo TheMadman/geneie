@@ -19,7 +19,8 @@ struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)
 		return (struct geneie_sequence_ref){ 0 };
 
 	const ssize_t length = (ssize_t)strlen_result;
-	const bool valid = geneie_code_nucleic_string_valid(string);
+	const bool valid = geneie_code_nucleic_string_valid(string)
+		|| geneie_code_amino_string_valid(string);
 	return (struct geneie_sequence_ref) {
 		length,
 		valid ? (geneie_code *)string : NULL,
