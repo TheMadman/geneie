@@ -65,9 +65,8 @@ geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference);
  * \brief Performs an in-place translation of a
  * 	DNA sequence to a pre-mRNA sequence.
  *
- * Ambiguous amino acid codes and gaps are left
- * untouched. Otherwise, all T codes are transformed
- * into U codes.
+ * Ambiguous nucleotide codes, amino acid codes and gaps are left
+ * untouched. Otherwise, all T codes are transformed into U codes.
  *
  * \param reference The sequence reference to modify.
  */
