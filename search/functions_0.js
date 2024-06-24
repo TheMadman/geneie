@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['geneie_5fcode_5famino_5fchar_5fvalid_45',['geneie_code_amino_char_valid',['../code_8h.html#a1284d184d7557126c3dd85da0df785c8',1,'code.h']]],
+  ['geneie_5fcode_5famino_5fstring_5fvalid_46',['geneie_code_amino_string_valid',['../code_8h.html#a8f8c1cbffdc4a4a4edadf07eb328a2db',1,'code.h']]],
+  ['geneie_5fcode_5fnucleic_5fchar_5fvalid_47',['geneie_code_nucleic_char_valid',['../code_8h.html#aee6548b25641995ff20b5da2f00d9fef',1,'code.h']]],
+  ['geneie_5fcode_5fnucleic_5fstring_5fvalid_48',['geneie_code_nucleic_string_valid',['../code_8h.html#ab2b8f08db1ede9d4b2e3a88fe886a8ad',1,'code.h']]],
+  ['geneie_5fencoding_5fget_5fvalid_5fcodes_49',['geneie_encoding_get_valid_codes',['../encoding_8h.html#ae007e472ff1acb6e4954dcaebb611cd1',1,'encoding.h']]],
+  ['geneie_5fencoding_5fone_5fcodon_50',['geneie_encoding_one_codon',['../encoding_8h.html#aecd6ed6090219a98c11ffd30499eee50',1,'encoding.h']]],
+  ['geneie_5fsequence_5falloc_51',['geneie_sequence_alloc',['../sequence_8h.html#a0622bc4bd53f6b75d80952737d0def4c',1,'sequence.h']]],
+  ['geneie_5fsequence_5fcopy_52',['geneie_sequence_copy',['../sequence_8h.html#a0384576144ddc1846fec11ce3a87fee0',1,'sequence.h']]],
+  ['geneie_5fsequence_5ffree_53',['geneie_sequence_free',['../sequence_8h.html#a1c5c5eb0bd28edc30f4df4f652ffb654',1,'sequence.h']]],
+  ['geneie_5fsequence_5ffrom_5fstring_54',['geneie_sequence_from_string',['../sequence_8h.html#a868aaf25f1e0fbbcd7f5b4952bf5cab1',1,'sequence.h']]],
+  ['geneie_5fsequence_5fref_5fequal_55',['geneie_sequence_ref_equal',['../sequence__ref_8h.html#aacece5e2acf760ef614b60bb20433c0d',1,'sequence_ref.h']]],
+  ['geneie_5fsequence_5fref_5ffrom_5fstring_56',['geneie_sequence_ref_from_string',['../sequence__ref_8h.html#abb89a4f284850e3f80f8e69a5d05fc12',1,'sequence_ref.h']]],
+  ['geneie_5fsequence_5fref_5fin_57',['geneie_sequence_ref_in',['../sequence__ref_8h.html#accba7888cf1e2d36caf99eff70cbaa38',1,'sequence_ref.h']]],
+  ['geneie_5fsequence_5fref_5findex_58',['geneie_sequence_ref_index',['../sequence__ref_8h.html#a385d45207161accd7bf16881df7b7f78',1,'sequence_ref.h']]],
+  ['geneie_5fsequence_5fref_5ftrunc_59',['geneie_sequence_ref_trunc',['../sequence__ref_8h.html#a16084c6f2824fc6ab288ead07b222d51',1,'sequence_ref.h']]],
+  ['geneie_5fsequence_5fref_5fvalid_60',['geneie_sequence_ref_valid',['../sequence__ref_8h.html#ad2aff2b21e6c529cc4606624b4fd8235',1,'sequence_ref.h']]],
+  ['geneie_5fsequence_5ftools_5fdna_5fto_5fpremrna_61',['geneie_sequence_tools_dna_to_premrna',['../sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929',1,'sequence_tools.h']]],
+  ['geneie_5fsequence_5ftools_5fencode_62',['geneie_sequence_tools_encode',['../sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f',1,'sequence_tools.h']]],
+  ['geneie_5fsequence_5ftools_5fref_5ffrom_5fsequence_63',['geneie_sequence_tools_ref_from_sequence',['../sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04',1,'sequence_tools.h']]],
+  ['geneie_5fsequence_5ftools_5fsequence_5ffrom_5fref_64',['geneie_sequence_tools_sequence_from_ref',['../sequence__tools_8h.html#a23641900e32befb480f95477d0fe4b5d',1,'sequence_tools.h']]],
+  ['geneie_5fsequence_5ftools_5fsplice_65',['geneie_sequence_tools_splice',['../sequence__tools_8h.html#ac129ec2651e8d73524d6af539450e0de',1,'sequence_tools.h']]],
+  ['geneie_5fsequence_5ftools_5fsplicer_66',['geneie_sequence_tools_splicer',['../sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f',1,'sequence_tools.h']]],
+  ['geneie_5fsequence_5fvalid_67',['geneie_sequence_valid',['../sequence_8h.html#a71851f74f637f1dfe30bc4a4584df377',1,'sequence.h']]]
+];
