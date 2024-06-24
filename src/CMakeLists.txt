@@ -20,4 +20,5 @@ target_include_directories(geneiestatic
 
 install(TARGETS geneie geneiestatic
 	DESTINATION lib)
+install(FILES geneie.h DESTINATION include)
 install(DIRECTORY geneie DESTINATION include)
