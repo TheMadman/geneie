@@ -170,7 +170,7 @@ struct geneie_sequence_ref geneie_sequence_ref_index(
  */
 struct geneie_sequence_ref geneie_sequence_ref_trunc(
 	struct geneie_sequence_ref ref,
-	ssize_t new_size
+	ssize_t length
 );
 
 /**
