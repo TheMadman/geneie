@@ -35,7 +35,7 @@ extern "C" {
 
 /**
  * \brief Represents a sequence of codes, defined in
- * 	codes.h.
+ * 	code.h.
  *
  * These sequence objects are non-owning - that is,
  * when you construct these objects with a string,
