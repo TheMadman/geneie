@@ -69,7 +69,7 @@ $(function() {
 <div class="title">sequence_tools.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="sequence__tools_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">    1</a></span>&#160;<span class="comment">/*</span></div>
+<a href="sequence__tools_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">    1</a></span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Geneie - A Library and Tools for gene processing</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Copyright (C) 2024   Marcus Harrison</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -103,43 +103,47 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence.html">geneie_sequence</a></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<a class="code" href="sequence__tools_8h.html#a23641900e32befb480f95477d0fe4b5d">geneie_sequence_tools_sequence_from_ref</a>(struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">   73</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">geneie_sequence_tools_dna_to_premrna</a>(<span class="keyword">struct</span> <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f">geneie_sequence_tools_splicer</a>(</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> strand,</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        void *param</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    );</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> <a class="code" href="sequence__tools_8h.html#ac129ec2651e8d73524d6af539450e0de">geneie_sequence_tools_splice</a>(</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> strand,</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f">geneie_sequence_tools_splicer</a> *splicer_func,</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordtype">void</span> *param</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="structgeneie__sequence__tools__ref__pair.html">  126</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a> {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> refs[2];</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;};</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a> <a class="code" href="sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f">geneie_sequence_tools_encode</a>(</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> strand</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;} <span class="comment">// extern &quot;C&quot;</span></div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// GENEIE_SEQUENCE_TOOLS_H</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<a class="code" href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">geneie_sequence_tools_clean_whitespace</a>(struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">   86</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">geneie_sequence_tools_dna_to_premrna</a>(<span class="keyword">struct</span> <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <a class="code" href="sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f">geneie_sequence_tools_splicer</a>(</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> strand,</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        void *param</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    );</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> <a class="code" href="sequence__tools_8h.html#ac129ec2651e8d73524d6af539450e0de">geneie_sequence_tools_splice</a>(</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> strand,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f">geneie_sequence_tools_splicer</a> *splicer_func,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">void</span> *param</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="structgeneie__sequence__tools__ref__pair.html">  139</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a> {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> refs[2];</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;};</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">struct </span><a class="code" href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a> <a class="code" href="sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f">geneie_sequence_tools_encode</a>(</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    struct <a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> strand</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;} <span class="comment">// extern &quot;C&quot;</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// GENEIE_SEQUENCE_TOOLS_H</span></div>
 <div class="ttc" id="asequence_8h_html"><div class="ttname"><a href="sequence_8h.html">sequence.h</a></div></div>
 <div class="ttc" id="asequence__ref_8h_html"><div class="ttname"><a href="sequence__ref_8h.html">sequence_ref.h</a></div></div>
 <div class="ttc" id="asequence__tools_8h_html_a0fa3a8a88b5a21b9ebb17e67cc369c04"><div class="ttname"><a href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">geneie_sequence_tools_ref_from_sequence</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence)</div><div class="ttdoc">Creates a reference from a sequence.</div></div>
 <div class="ttc" id="asequence__tools_8h_html_a23641900e32befb480f95477d0fe4b5d"><div class="ttname"><a href="sequence__tools_8h.html#a23641900e32befb480f95477d0fe4b5d">geneie_sequence_tools_sequence_from_ref</a></div><div class="ttdeci">struct geneie_sequence geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference)</div><div class="ttdoc">Allocates a new sequence object from a given sequence reference.</div></div>
 <div class="ttc" id="asequence__tools_8h_html_a26104078dae8af7ab972f44fb480c09f"><div class="ttname"><a href="sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f">geneie_sequence_tools_splicer</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_splicer(struct geneie_sequence_ref strand, void *param)</div><div class="ttdoc">The function signature for a splicer.</div></div>
 <div class="ttc" id="asequence__tools_8h_html_a5efaaa3780327d85cbd91c76a7b59929"><div class="ttname"><a href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">geneie_sequence_tools_dna_to_premrna</a></div><div class="ttdeci">void geneie_sequence_tools_dna_to_premrna(struct geneie_sequence_ref reference)</div><div class="ttdoc">Performs an in-place translation of a DNA sequence to a pre-mRNA sequence.</div></div>
+<div class="ttc" id="asequence__tools_8h_html_a784070c13c3df25371edcf33971f2208"><div class="ttname"><a href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">geneie_sequence_tools_clean_whitespace</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_clean_whitespace(struct geneie_sequence_ref reference)</div><div class="ttdoc">Removes any whitespace characters from the sequence.</div></div>
 <div class="ttc" id="asequence__tools_8h_html_ab7de189ca05d07b71e692e36e870b54f"><div class="ttname"><a href="sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f">geneie_sequence_tools_encode</a></div><div class="ttdeci">struct geneie_sequence_tools_ref_pair geneie_sequence_tools_encode(struct geneie_sequence_ref strand)</div><div class="ttdoc">Encodes mRNA sequences into amino acid sequences in-place.</div></div>
 <div class="ttc" id="asequence__tools_8h_html_ac129ec2651e8d73524d6af539450e0de"><div class="ttname"><a href="sequence__tools_8h.html#ac129ec2651e8d73524d6af539450e0de">geneie_sequence_tools_splice</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_splice(struct geneie_sequence_ref strand, geneie_sequence_tools_splicer *splicer_func, void *param)</div><div class="ttdoc">Splices a pre-mRNA sequence into a mature mRNA sequence.</div></div>
 <div class="ttc" id="astructgeneie__sequence__ref_html"><div class="ttname"><a href="structgeneie__sequence__ref.html">geneie_sequence_ref</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:46</div></div>
-<div class="ttc" id="astructgeneie__sequence__tools__ref__pair_html"><div class="ttname"><a href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a></div><div class="ttdoc">Provides a pair of references.</div><div class="ttdef"><b>Definition:</b> sequence_tools.h:126</div></div>
+<div class="ttc" id="astructgeneie__sequence__tools__ref__pair_html"><div class="ttname"><a href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a></div><div class="ttdoc">Provides a pair of references.</div><div class="ttdef"><b>Definition:</b> sequence_tools.h:139</div></div>
 <div class="ttc" id="astructgeneie__sequence_html"><div class="ttname"><a href="structgeneie__sequence.html">geneie_sequence</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence.h:46</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

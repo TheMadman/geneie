@@ -91,6 +91,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a23641900e32befb480f95477d0fe4b5d"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structgeneie__sequence.html">geneie_sequence</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sequence__tools_8h.html#a23641900e32befb480f95477d0fe4b5d">geneie_sequence_tools_sequence_from_ref</a> (struct <a class="el" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference)</td></tr>
 <tr class="memdesc:a23641900e32befb480f95477d0fe4b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new sequence object from a given sequence reference.  <a href="sequence__tools_8h.html#a23641900e32befb480f95477d0fe4b5d">More...</a><br /></td></tr>
 <tr class="separator:a23641900e32befb480f95477d0fe4b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a784070c13c3df25371edcf33971f2208"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">geneie_sequence_tools_clean_whitespace</a> (struct <a class="el" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference)</td></tr>
+<tr class="memdesc:a784070c13c3df25371edcf33971f2208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes any whitespace characters from the sequence.  <a href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">More...</a><br /></td></tr>
+<tr class="separator:a784070c13c3df25371edcf33971f2208"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5efaaa3780327d85cbd91c76a7b59929"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">geneie_sequence_tools_dna_to_premrna</a> (struct <a class="el" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> reference)</td></tr>
 <tr class="memdesc:a5efaaa3780327d85cbd91c76a7b59929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an in-place translation of a DNA sequence to a pre-mRNA sequence.  <a href="sequence__tools_8h.html#a5efaaa3780327d85cbd91c76a7b59929">More...</a><br /></td></tr>
 <tr class="separator:a5efaaa3780327d85cbd91c76a7b59929"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,6 +108,34 @@ Functions</h2></td></tr>
 <tr class="separator:ab7de189ca05d07b71e692e36e870b54f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a784070c13c3df25371edcf33971f2208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a784070c13c3df25371edcf33971f2208">&#9670;&nbsp;</a></span>geneie_sequence_tools_clean_whitespace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> geneie_sequence_tools_clean_whitespace </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a>&#160;</td>
+          <td class="paramname"><em>reference</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes any whitespace characters from the sequence. </p>
+<p>This can occur from e.g. initializing a sequence from file contents.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reference</td><td>A reference to the sequence to clean.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference with the new length. </dd></dl>
+
+</div>
+</div>
 <a id="a5efaaa3780327d85cbd91c76a7b59929"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5efaaa3780327d85cbd91c76a7b59929">&#9670;&nbsp;</a></span>geneie_sequence_tools_dna_to_premrna()</h2>
 

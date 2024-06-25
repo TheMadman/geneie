@@ -257,7 +257,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The beginning of the gene sequence. </p>
-<p>Gene sequences in this object are NOT null-terminated. </p>
+<p>A null terminator is added automatically. This library will ignore the null terminator for processing. </p>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The length of the gene sequence. </p>
-<p>&amp;codes[length] returns one pointer past the end of the data. </p>
+<p>&amp;codes[length] returns a pointer to a null terminator. </p>
 
 </div>
 </div>
