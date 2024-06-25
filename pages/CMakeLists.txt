@@ -1,2 +1,2 @@
-add_executable(simple simple.c)
-target_link_libraries(simple geneie)
+add_executable(codon_encoder codon_encoder.c)
+target_link_libraries(codon_encoder geneie)
