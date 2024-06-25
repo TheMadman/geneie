@@ -97,6 +97,39 @@ void test_dna_to_premrna(void)
 	}
 }
 
+void test_clean_whitespace(void)
+{
+	{
+		char dna[] = "ACGTRYKMSWBDHVNX-";
+
+		struct geneie_sequence_ref
+			reference = ref_from_literal(dna);
+
+		struct geneie_sequence_ref
+			result = geneie_sequence_tools_clean_whitespace(reference);
+
+		// Should have done nothing
+		assert(geneie_sequence_ref_equal(reference, result));
+	}
+
+	{
+		char dna[] = "ACGTRY\nKMSWBD  HVNX-";
+
+		struct geneie_sequence_ref
+			reference = ref_from_literal(dna);
+
+		assert(geneie_sequence_ref_valid(reference));
+
+		struct geneie_sequence_ref
+			result = geneie_sequence_tools_clean_whitespace(reference);
+
+		struct geneie_sequence_ref
+			expected = ref_from_literal("ACGTRYKMSWBDHVNX-");
+
+		assert(geneie_sequence_ref_equal(result, expected));
+	}
+}
+
 struct geneie_sequence_ref splice_G(struct geneie_sequence_ref strand, void *param)
 {
 	(void)param;

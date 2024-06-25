@@ -1,6 +1,7 @@
 #include "geneie/sequence_tools.h"
 
 #include <string.h>
+#include <ctype.h>
 
 #include "geneie/code.h"
 #include "geneie/encoding.h"
@@ -12,8 +13,41 @@ typedef struct geneie_sequence_tools_ref_pair seq_r_pair;
 #define index geneie_sequence_ref_index
 #define trunc geneie_sequence_ref_trunc
 #define one_codon geneie_encoding_one_codon
+#define valid geneie_sequence_ref_valid
 
 static const seq invalid_sequence = { 0 };
+
+static seq_r splice_whitespace(seq_r ref, void *_)
+{
+	// The param is unused
+	(void)_;
+	for (; valid(ref); ref = index(ref, 1)) {
+		if (!isspace(ref.codes[0]))
+			continue;
+
+		ssize_t whitespace_length = 0;
+		seq_r result = ref;
+		for (; valid(ref); ref = index(ref, 1)) {
+			if (isspace(ref.codes[0]))
+				whitespace_length++;
+			else
+				break;
+		}
+
+		return trunc(result, whitespace_length);
+	}
+
+	return (seq_r) { 0 };
+}
+
+seq_r geneie_sequence_tools_clean_whitespace(seq_r reference)
+{
+	return geneie_sequence_tools_splice(
+		reference,
+		splice_whitespace,
+		NULL
+	);
+}
 
 seq_r geneie_sequence_tools_ref_from_sequence(seq sequence)
 {

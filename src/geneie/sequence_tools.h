@@ -62,6 +62,19 @@ struct geneie_sequence
 geneie_sequence_tools_sequence_from_ref(struct geneie_sequence_ref reference);
 
 /**
+ * \brief Removes any whitespace characters from the sequence.
+ *
+ * This can occur from e.g. initializing a sequence from
+ * file contents.
+ *
+ * \param reference A reference to the sequence to clean.
+ *
+ * \returns A reference with the new length.
+ */
+struct geneie_sequence_ref
+geneie_sequence_tools_clean_whitespace(struct geneie_sequence_ref reference);
+
+/**
  * \brief Performs an in-place translation of a
  * 	DNA sequence to a pre-mRNA sequence.
  *
