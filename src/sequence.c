@@ -16,8 +16,9 @@ struct geneie_sequence geneie_sequence_alloc(ssize_t length)
 
 	const struct geneie_sequence result = {
 		length,
-		malloc((size_t)length)
+		malloc((size_t)length + 1)
 	};
+	result.codes[length] = '\0';
 	return result;
 }
 

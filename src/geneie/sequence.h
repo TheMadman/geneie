@@ -47,15 +47,17 @@ struct geneie_sequence {
 	/**
 	 * \brief The length of the gene sequence.
 	 *
-	 * &codes[length] returns one pointer past the end
-	 * of the data.
+	 * &codes[length] returns a pointer to a null
+	 * terminator.
 	 */
 	ssize_t length;
 
 	/**
 	 * \brief The beginning of the gene sequence.
 	 *
-	 * Gene sequences in this object are NOT null-terminated.
+	 * A null terminator is added automatically. This
+	 * library will ignore the null terminator for
+	 * processing.
 	 */
 	geneie_code *codes;
 };
