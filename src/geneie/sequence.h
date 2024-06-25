@@ -61,6 +61,7 @@ struct geneie_sequence {
 };
 
 /**
+ * \public \memberof geneie_sequence
  * \brief Returns whether this is a valid geneie_sequence
  * 	object.
  *
@@ -71,6 +72,7 @@ struct geneie_sequence {
 bool geneie_sequence_valid(struct geneie_sequence sequence);
 
 /**
+ * \public \memberof geneie_sequence
  * \brief Allocates uninitialized memory for a geneie_sequence
  * 	object and initializes its `length` member.
  *
@@ -87,6 +89,7 @@ bool geneie_sequence_valid(struct geneie_sequence sequence);
 struct geneie_sequence geneie_sequence_alloc(ssize_t length);
 
 /**
+ * \public \memberof geneie_sequence
  * \brief Constructs a new geneie_sequence from the given string.
  *
  * If the string is not a valid sequence, then the function returns
@@ -100,6 +103,7 @@ struct geneie_sequence geneie_sequence_alloc(ssize_t length);
 struct geneie_sequence geneie_sequence_from_string(const char *string);
 
 /**
+ * \public \memberof geneie_sequence
  * \brief Constructs a geneie_sequence that is a copy of the given
  * 	sequence.
  *
@@ -111,6 +115,7 @@ struct geneie_sequence geneie_sequence_from_string(const char *string);
 struct geneie_sequence geneie_sequence_copy(struct geneie_sequence other);
 
 /**
+ * \public \memberof geneie_sequence
  * \brief Frees a given geneie_sequence.
  *
  * \param sequence The sequence to free.

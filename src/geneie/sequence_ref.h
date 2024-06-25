@@ -60,6 +60,7 @@ struct geneie_sequence_ref {
 };
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Creates a reference from a raw array, skipping
  * 	validity checks.
  *
@@ -78,6 +79,7 @@ struct geneie_sequence_ref {
 ((struct geneie_sequence_ref) { sizeof(array), (array) })
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Constructs a geneie_sequence_ref from a C string literal.
  *
  * \param string_literal A C string literal, such as `"ACGT"`.
@@ -97,6 +99,7 @@ struct geneie_sequence_ref {
 })
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Constructs a geneie_sequence_strand from a null-terminated
  * 	character array.
  *
@@ -111,6 +114,7 @@ struct geneie_sequence_ref {
 struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string);
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Checks if the given object is valid to use.
  *
  * \param sequence The sequence to test.
@@ -120,6 +124,7 @@ struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string);
 bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence);
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Performs an equality comparison between two geneie_sequence_ref
  * 	objects.
  *
@@ -137,6 +142,7 @@ bool geneie_sequence_ref_equal(
 );
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Takes the reference and an index and returns
  * 	a new reference, starting from that location
  * 	in the original reference.
@@ -157,6 +163,7 @@ struct geneie_sequence_ref geneie_sequence_ref_index(
 );
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Takes the given reference and returns a new
  * 	reference with the length set to the given
  * 	length.
@@ -174,6 +181,7 @@ struct geneie_sequence_ref geneie_sequence_ref_trunc(
 );
 
 /**
+ * \public \memberof geneie_sequence_ref
  * \brief Searches the given reference for the given code.
  *
  * This function does not perform input validation: you
