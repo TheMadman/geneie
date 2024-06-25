@@ -122,7 +122,7 @@ $(function() {
 <div class="line">        <span class="comment">// geneie_sequence_ref_from_literal(), since the buffer is</span></div>
 <div class="line">        <span class="comment">// static. However, ref_from_string() will work for all</span></div>
 <div class="line">        <span class="comment">// null-terminated strings, including those allocated dynamically.</span></div>
-<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref</a> codon = <a class="code" href="sequence__ref_8h.html#abb89a4f284850e3f80f8e69a5d05fc12">geneie_sequence_ref_from_string</a>(codon_store);</div>
+<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref</a> codon = <a class="code" href="structgeneie__sequence__ref.html#abb89a4f284850e3f80f8e69a5d05fc12">geneie_sequence_ref_from_string</a>(codon_store);</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// geneie_sequence_ref_from_string() and _from_literal() will</span></div>
 <div class="line">        <span class="comment">// check if the passed string consists of valid nucleotide or</span></div>
@@ -133,7 +133,7 @@ $(function() {
 <div class="line">        <span class="comment">//</span></div>
 <div class="line">        <span class="comment">// Valid nucleotide codes include the ambiguous nucleotide codes</span></div>
 <div class="line">        <span class="comment">// specified by the IUPAC.</span></div>
-<div class="line">        <span class="keywordflow">if</span> (!<a class="code" href="sequence__ref_8h.html#ad2aff2b21e6c529cc4606624b4fd8235">geneie_sequence_ref_valid</a>(codon))</div>
+<div class="line">        <span class="keywordflow">if</span> (!<a class="code" href="structgeneie__sequence__ref.html#ad2aff2b21e6c529cc4606624b4fd8235">geneie_sequence_ref_valid</a>(codon))</div>
 <div class="line">            <span class="keywordflow">return</span> 1;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordtype">char</span> amino_store[1] = { 0 };</div>
@@ -141,7 +141,7 @@ $(function() {
 <div class="line">        <span class="comment">// This call, by contrast, doesn&#39;t check for valid codes.</span></div>
 <div class="line">        <span class="comment">// This is fine here, since we are using this reference as an</span></div>
 <div class="line">        <span class="comment">// out parameter for an amino acid code.</span></div>
-<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref</a> amino = <a class="code" href="sequence__ref_8h.html#a0523982fa4a8334be4e2e47291be11b0">geneie_sequence_ref_from_array_unsafe</a>(amino_store);</div>
+<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref</a> amino = <a class="code" href="structgeneie__sequence__ref.html#a0523982fa4a8334be4e2e47291be11b0">geneie_sequence_ref_from_array_unsafe</a>(amino_store);</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// If the encoding was successful, print the amino code</span></div>
 <div class="line">        <span class="keywordflow">if</span> (<a class="code" href="encoding_8h.html#aecd6ed6090219a98c11ffd30499eee50">geneie_encoding_one_codon</a>(codon, amino))</div>
@@ -154,10 +154,10 @@ $(function() {
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="ttc" id="aencoding_8h_html_aecd6ed6090219a98c11ffd30499eee50"><div class="ttname"><a href="encoding_8h.html#aecd6ed6090219a98c11ffd30499eee50">geneie_encoding_one_codon</a></div><div class="ttdeci">bool geneie_encoding_one_codon(struct geneie_sequence_ref codon, struct geneie_sequence_ref amino_out)</div><div class="ttdoc">This function encodes a single codon from codon into a single amino acid character given by amino_out...</div></div>
-<div class="ttc" id="asequence__ref_8h_html_a0523982fa4a8334be4e2e47291be11b0"><div class="ttname"><a href="sequence__ref_8h.html#a0523982fa4a8334be4e2e47291be11b0">geneie_sequence_ref_from_array_unsafe</a></div><div class="ttdeci">#define geneie_sequence_ref_from_array_unsafe(array)</div><div class="ttdoc">Creates a reference from a raw array, skipping validity checks.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:77</div></div>
-<div class="ttc" id="asequence__ref_8h_html_abb89a4f284850e3f80f8e69a5d05fc12"><div class="ttname"><a href="sequence__ref_8h.html#abb89a4f284850e3f80f8e69a5d05fc12">geneie_sequence_ref_from_string</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)</div><div class="ttdoc">Constructs a geneie_sequence_strand from a null-terminated character array.</div></div>
-<div class="ttc" id="asequence__ref_8h_html_ad2aff2b21e6c529cc4606624b4fd8235"><div class="ttname"><a href="sequence__ref_8h.html#ad2aff2b21e6c529cc4606624b4fd8235">geneie_sequence_ref_valid</a></div><div class="ttdeci">bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence)</div><div class="ttdoc">Checks if the given object is valid to use.</div></div>
 <div class="ttc" id="astructgeneie__sequence__ref_html"><div class="ttname"><a href="structgeneie__sequence__ref.html">geneie_sequence_ref</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:46</div></div>
+<div class="ttc" id="astructgeneie__sequence__ref_html_a0523982fa4a8334be4e2e47291be11b0"><div class="ttname"><a href="structgeneie__sequence__ref.html#a0523982fa4a8334be4e2e47291be11b0">geneie_sequence_ref::geneie_sequence_ref_from_array_unsafe</a></div><div class="ttdeci">#define geneie_sequence_ref_from_array_unsafe(array)</div><div class="ttdoc">Creates a reference from a raw array, skipping validity checks.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:78</div></div>
+<div class="ttc" id="astructgeneie__sequence__ref_html_abb89a4f284850e3f80f8e69a5d05fc12"><div class="ttname"><a href="structgeneie__sequence__ref.html#abb89a4f284850e3f80f8e69a5d05fc12">geneie_sequence_ref::geneie_sequence_ref_from_string</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_ref_from_string(char *string)</div><div class="ttdoc">Constructs a geneie_sequence_strand from a null-terminated character array.</div></div>
+<div class="ttc" id="astructgeneie__sequence__ref_html_ad2aff2b21e6c529cc4606624b4fd8235"><div class="ttname"><a href="structgeneie__sequence__ref.html#ad2aff2b21e6c529cc4606624b4fd8235">geneie_sequence_ref::geneie_sequence_ref_valid</a></div><div class="ttdeci">bool geneie_sequence_ref_valid(struct geneie_sequence_ref sequence)</div><div class="ttdoc">Checks if the given object is valid to use.</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

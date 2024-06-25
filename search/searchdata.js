@@ -18,7 +18,7 @@ var indexSectionNames =
   3: "functions",
   4: "variables",
   5: "typedefs",
-  6: "defines",
+  6: "related",
   7: "pages"
 };
 
@@ -30,7 +30,7 @@ var indexSectionLabels =
   3: "Functions",
   4: "Variables",
   5: "Typedefs",
-  6: "Macros",
+  6: "Friends",
   7: "Pages"
 };
 
