@@ -30,3 +30,4 @@ I know this is a wordy process: more convenient functions are planned.
 For usage examples, consider:
 - \ref simple_example "An example of encoding codons one-by-one"
 - \ref large_encoding_example "A larger example, loading a file into memory in one read and performing encoding on the whole contents at once"
+- \ref splice_simple "A simple example of geneie_sequence_tools_splice() usage"

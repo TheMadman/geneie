@@ -3,3 +3,6 @@ target_link_libraries(codon_encoder geneie)
 
 add_executable(large_file_encoding large_file_encoding.c)
 target_link_libraries(large_file_encoding geneie)
+
+add_library(clean_whitespace clean_whitespace.c)
+target_link_libraries(clean_whitespace geneie)
