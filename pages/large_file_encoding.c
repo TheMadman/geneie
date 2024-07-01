@@ -19,7 +19,7 @@ typedef struct geneie_sequence_ref ref_t;
 typedef struct geneie_sequence_tools_ref_pair pair_t;
 
 /*
- * Moved the processing to a separate file, so even if an
+ * Moved the processing to a separate function, so even if an
  * error is returned here, we can fclose() the file safely
  * in main().
  */
