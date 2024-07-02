@@ -39,72 +39,68 @@ int process_file(FILE *file)
 
 	rewind(file);
 
-	/*
-	 * geneie_sequence_alloc() will allocate length memory,
-	 * creating (and preserving) a null terminator for
-	 * convenience.
-	 */
-	seq_t store = geneie_sequence_alloc(length);
-	if (!geneie_sequence_valid(store))
-		return errno;
+	int error = -1;
 
-	size_t read_amount = fread(store.codes, 1, (size_t)length, file);
+	GENEIE_SEQUENCE_WITH(sequence, length) {
+		size_t read_amount = fread(sequence.codes, 1, (size_t)length, file);
 
-	if (ferror(file)) {
-		geneie_sequence_free(store);
-		return ferror(file);
+		if (ferror(file)) {
+			error = ferror(file);
+			continue;
+		}
+
+		/*
+		 * Most processing isn't performed against geneie_sequence
+		 * objects directly, instead it happens through a reference.
+		 *
+		 * This helps to simplify resource management - references
+		 * are never allocated and never freed; each sequence should
+		 * have been allocated, and each must be passed to
+		 * geneie_sequence_free().
+		 */
+		ref_t ref = geneie_sequence_tools_ref_from_sequence(sequence);
+		// only consider read amount
+		ref = geneie_sequence_ref_trunc(ref, (ssize_t)read_amount);
+		// clean whitespace
+		ref = geneie_sequence_tools_clean_whitespace(ref);
+
+		/*
+		 * Finally, encode the data in-place.
+		 *
+		 * In-place encoding avoids the cost of allocating and copying
+		 * potentially huge amounts of data, at the cost of (obviously)
+		 * destroying the original data stored in the sequence.
+		 *
+		 * This function returns a pair of geneie_sequence_ref objects:
+		 * the first is the a sequence containing the amino acids that
+		 * could be encoded; the second contains the remainder of the
+		 * DNA/mRNA sequence, starting from the first codon that failed.
+		 */
+		pair_t pair = geneie_sequence_tools_encode(ref);
+
+		if (pair.refs[0].length > INT_MAX)
+			printf("Encoded output too long for printf");
+		else if (pair.refs[0].length == 0)
+			printf("No DNA/mRNA encoded\n");
+		else
+			/*
+			 * The %.*s syntax here allows us to print only the
+			 * characters in the sequence. To learn more, check
+			 * the Precision section of the printf man page.
+			 */
+			printf("Encoded output: %.*s\n", (int)pair.refs[0].length, pair.refs[0].codes);
+
+		if (pair.refs[1].length > INT_MAX)
+			printf("Remaining DNA/mRNA too long for printf");
+		else if (pair.refs[1].length == 0)
+			printf("All DNA/mRNA encoded\n");
+		else
+			printf("Remaining DNA/mRNA: %.*s\n", (int)pair.refs[1].length, pair.refs[1].codes);
+
+		error = 0;
 	}
 
-	/*
-	 * Most processing isn't performed against geneie_sequence
-	 * objects directly, instead it happens through a reference.
-	 *
-	 * This helps to simplify resource management - references
-	 * are never allocated and never freed; each sequence should
-	 * have been allocated, and each must be passed to
-	 * geneie_sequence_free().
-	 */
-	ref_t ref = geneie_sequence_tools_ref_from_sequence(store);
-	// only consider read amount
-	ref = geneie_sequence_ref_trunc(ref, (ssize_t)read_amount);
-	// clean whitespace
-	ref = geneie_sequence_tools_clean_whitespace(ref);
-
-	/*
-	 * Finally, encode the data in-place.
-	 *
-	 * In-place encoding avoids the cost of allocating and copying
-	 * potentially huge amounts of data, at the cost of (obviously)
-	 * destroying the original data stored in the sequence.
-	 *
-	 * This function returns a pair of geneie_sequence_ref objects:
-	 * the first is the a sequence containing the amino acids that
-	 * could be encoded; the second contains the remainder of the
-	 * DNA/mRNA sequence, starting from the first codon that failed.
-	 */
-	pair_t pair = geneie_sequence_tools_encode(ref);
-
-	if (pair.refs[0].length > INT_MAX)
-		printf("Encoded output too long for printf");
-	else if (pair.refs[0].length == 0)
-		printf("No DNA/mRNA encoded\n");
-	else
-		/*
-		 * The %.*s syntax here allows us to print only the
-		 * characters in the sequence. To learn more, check
-		 * the Precision section of the printf man page.
-		 */
-		printf("Encoded output: %.*s\n", (int)pair.refs[0].length, pair.refs[0].codes);
-
-	if (pair.refs[1].length > INT_MAX)
-		printf("Remaining DNA/mRNA too long for printf");
-	else if (pair.refs[1].length == 0)
-		printf("All DNA/mRNA encoded\n");
-	else
-		printf("Remaining DNA/mRNA: %.*s\n", (int)pair.refs[1].length, pair.refs[1].codes);
-
-	geneie_sequence_free(store);
-	return 0;
+	return error;
 }
 
 /*

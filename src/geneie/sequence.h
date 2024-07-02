@@ -42,6 +42,8 @@ extern "C" {
  *
  * You must pass these to geneie_sequence_free() when
  * finished with them.
+ *
+ * \sa GENEIE_SEQUENCE_WITH
  */
 struct geneie_sequence {
 	/**
@@ -87,6 +89,7 @@ bool geneie_sequence_valid(struct geneie_sequence sequence);
  *
  * \returns A pointer to a newly-allocated object, or NULL
  * 	if allocation failed.
+ * \sa GENEIE_SEQUENCE_WITH
  */
 struct geneie_sequence geneie_sequence_alloc(ssize_t length);
 
@@ -123,6 +126,46 @@ struct geneie_sequence geneie_sequence_copy(struct geneie_sequence other);
  * \param sequence The sequence to free.
  */
 void geneie_sequence_free(struct geneie_sequence sequence);
+
+/**
+ * \brief Provides a context-manager-esque interface for
+ * 	a sequence.
+ *
+ * This allocates a sequence, checks if it's valid, runs
+ * your block of code, then frees when control leaves the block.
+ *
+ * If allocation fails, the code block is skipped.
+ *
+ * Usage is as follows:
+ *
+ * \code
+ * GENEIE_SEQUENCE_WITH(my_sequence, 1024) {
+ * 	// `my_sequence` is now a struct geneie_sequence
+ * 	// and can be used normally
+ * 	struct geneie_sequence_ref ref = geneie_sequence_tools_ref_from_sequence(my_sequence);
+ * 	// etc.
+ *
+ * 	// Using `break` and (most) `return` statements
+ * 	// from here will result in a leak; to finish
+ * 	// early and still clean up, use `continue`.
+ * 	if (some_error)
+ * 		continue;
+ *
+ * 	// The only thing you can return that won't leak
+ * 	// `my_sequence` is `my_sequence`.
+ * 	return my_sequence;
+ * }
+ * \endcode
+ *
+ * \param NAME The name to give the sequence variable.
+ * \param LENGTH The length of the sequence to allocate.
+ */
+#define GENEIE_SEQUENCE_WITH(NAME, LENGTH) \
+for ( \
+	struct geneie_sequence NAME = geneie_sequence_alloc(LENGTH); \
+	geneie_sequence_valid(NAME); \
+	geneie_sequence_free(NAME), NAME = (struct geneie_sequence){ 0 } \
+)
 
 #ifdef __cplusplus
 } // extern "C"
