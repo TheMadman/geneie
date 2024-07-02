@@ -66,7 +66,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">sequence.h File Reference</div>  </div>
 </div><!--header-->
@@ -82,7 +83,80 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgeneie__sequence.html">geneie_sequence</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a sequence of codes, defined in <a class="el" href="code_8h.html">code.h</a>.  <a href="structgeneie__sequence.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:af8c073133ec34e94cc9c7548ae8b28ee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee">GENEIE_SEQUENCE_WITH</a>(NAME,  LENGTH)</td></tr>
+<tr class="memdesc:af8c073133ec34e94cc9c7548ae8b28ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a context-manager-esque interface for a sequence.  <a href="sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee">More...</a><br /></td></tr>
+<tr class="separator:af8c073133ec34e94cc9c7548ae8b28ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="af8c073133ec34e94cc9c7548ae8b28ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8c073133ec34e94cc9c7548ae8b28ee">&#9670;&nbsp;</a></span>GENEIE_SEQUENCE_WITH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GENEIE_SEQUENCE_WITH</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">LENGTH&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">for</span> ( \</div>
+<div class="line">    <span class="keyword">struct</span> <a class="code" href="structgeneie__sequence.html">geneie_sequence</a> NAME = <a class="code" href="structgeneie__sequence.html#a0622bc4bd53f6b75d80952737d0def4c">geneie_sequence_alloc</a>(LENGTH); \</div>
+<div class="line">    geneie_sequence_valid(NAME); \</div>
+<div class="line">    geneie_sequence_free(NAME), NAME = (<span class="keyword">struct </span><a class="code" href="structgeneie__sequence.html">geneie_sequence</a>){ 0 } \</div>
+<div class="line">)</div>
+<div class="ttc" id="astructgeneie__sequence_html"><div class="ttname"><a href="structgeneie__sequence.html">geneie_sequence</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence.h:48</div></div>
+<div class="ttc" id="astructgeneie__sequence_html_a0622bc4bd53f6b75d80952737d0def4c"><div class="ttname"><a href="structgeneie__sequence.html#a0622bc4bd53f6b75d80952737d0def4c">geneie_sequence::geneie_sequence_alloc</a></div><div class="ttdeci">struct geneie_sequence geneie_sequence_alloc(ssize_t length)</div><div class="ttdoc">Allocates uninitialized memory for a geneie_sequence object and initializes its length member.</div></div>
+</div><!-- fragment -->
+<p>Provides a context-manager-esque interface for a sequence. </p>
+<p>This allocates a sequence, checks if it's valid, runs your block of code, then frees when control leaves the block.</p>
+<p>If allocation fails, the code block is skipped.</p>
+<p>Usage is as follows:</p>
+<div class="fragment"><div class="line"><a class="code" href="sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee">GENEIE_SEQUENCE_WITH</a>(my_sequence, 1024) {</div>
+<div class="line">    <span class="comment">// `my_sequence` is now a struct geneie_sequence</span></div>
+<div class="line">    <span class="comment">// and can be used normally</span></div>
+<div class="line">    <span class="keyword">struct </span><a class="code" href="structgeneie__sequence__ref.html">geneie_sequence_ref</a> <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">geneie_sequence_tools_ref_from_sequence</a>(my_sequence);</div>
+<div class="line">    <span class="comment">// etc.</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Using `break` and (most) `return` statements</span></div>
+<div class="line">    <span class="comment">// from here will result in a leak; to finish</span></div>
+<div class="line">    <span class="comment">// early and still clean up, use `continue`.</span></div>
+<div class="line">    <span class="keywordflow">if</span> (some_error)</div>
+<div class="line">        <span class="keywordflow">continue</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// The only thing you can return that won&#39;t leak</span></div>
+<div class="line">    <span class="comment">// `my_sequence` is `my_sequence`.</span></div>
+<div class="line">    <span class="keywordflow">return</span> my_sequence;</div>
+<div class="line">}</div>
+<div class="ttc" id="asequence_8h_html_af8c073133ec34e94cc9c7548ae8b28ee"><div class="ttname"><a href="sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee">GENEIE_SEQUENCE_WITH</a></div><div class="ttdeci">#define GENEIE_SEQUENCE_WITH(NAME, LENGTH)</div><div class="ttdoc">Provides a context-manager-esque interface for a sequence.</div><div class="ttdef"><b>Definition:</b> sequence.h:163</div></div>
+<div class="ttc" id="asequence__tools_8h_html_a0fa3a8a88b5a21b9ebb17e67cc369c04"><div class="ttname"><a href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">geneie_sequence_tools_ref_from_sequence</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence)</div><div class="ttdoc">Creates a reference from a sequence.</div></div>
+<div class="ttc" id="astructgeneie__sequence__ref_html"><div class="ttname"><a href="structgeneie__sequence__ref.html">geneie_sequence_ref</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:46</div></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">NAME</td><td>The name to give the sequence variable. </td></tr>
+    <tr><td class="paramname">LENGTH</td><td>The length of the sequence to allocate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

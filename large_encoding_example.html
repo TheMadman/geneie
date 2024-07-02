@@ -110,72 +110,68 @@ $(function() {
 <div class="line"> </div>
 <div class="line">    rewind(file);</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/*</span></div>
-<div class="line"><span class="comment">     * geneie_sequence_alloc() will allocate length memory,</span></div>
-<div class="line"><span class="comment">     * creating (and preserving) a null terminator for</span></div>
-<div class="line"><span class="comment">     * convenience.</span></div>
-<div class="line"><span class="comment">     */</span></div>
-<div class="line">    <a class="code" href="structgeneie__sequence.html">seq_t</a> store = <a class="code" href="structgeneie__sequence.html#a0622bc4bd53f6b75d80952737d0def4c">geneie_sequence_alloc</a>(length);</div>
-<div class="line">    <span class="keywordflow">if</span> (!<a class="code" href="structgeneie__sequence.html#a71851f74f637f1dfe30bc4a4584df377">geneie_sequence_valid</a>(store))</div>
-<div class="line">        <span class="keywordflow">return</span> errno;</div>
+<div class="line">    <span class="keywordtype">int</span> error = -1;</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">size_t</span> read_amount = fread(store.<a class="code" href="structgeneie__sequence.html#af8e59ea34fcfab0da413bd3c5f6ebb12">codes</a>, 1, (<span class="keywordtype">size_t</span>)length, file);</div>
+<div class="line">    <a class="code" href="sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee">GENEIE_SEQUENCE_WITH</a>(sequence, length) {</div>
+<div class="line">        <span class="keywordtype">size_t</span> read_amount = fread(sequence.codes, 1, (<span class="keywordtype">size_t</span>)length, file);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (ferror(file)) {</div>
-<div class="line">        <a class="code" href="structgeneie__sequence.html#a1c5c5eb0bd28edc30f4df4f652ffb654">geneie_sequence_free</a>(store);</div>
-<div class="line">        <span class="keywordflow">return</span> ferror(file);</div>
+<div class="line">        <span class="keywordflow">if</span> (ferror(file)) {</div>
+<div class="line">            error = ferror(file);</div>
+<div class="line">            <span class="keywordflow">continue</span>;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/*</span></div>
+<div class="line"><span class="comment">         * Most processing isn&#39;t performed against geneie_sequence</span></div>
+<div class="line"><span class="comment">         * objects directly, instead it happens through a reference.</span></div>
+<div class="line"><span class="comment">         *</span></div>
+<div class="line"><span class="comment">         * This helps to simplify resource management - references</span></div>
+<div class="line"><span class="comment">         * are never allocated and never freed; each sequence should</span></div>
+<div class="line"><span class="comment">         * have been allocated, and each must be passed to</span></div>
+<div class="line"><span class="comment">         * geneie_sequence_free().</span></div>
+<div class="line"><span class="comment">         */</span></div>
+<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref_t</a> <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">geneie_sequence_tools_ref_from_sequence</a>(sequence);</div>
+<div class="line">        <span class="comment">// only consider read amount</span></div>
+<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="structgeneie__sequence__ref.html#a16084c6f2824fc6ab288ead07b222d51">geneie_sequence_ref_trunc</a>(<a class="code" href="structgeneie__sequence__ref.html">ref</a>, (ssize_t)read_amount);</div>
+<div class="line">        <span class="comment">// clean whitespace</span></div>
+<div class="line">        <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">geneie_sequence_tools_clean_whitespace</a>(<a class="code" href="structgeneie__sequence__ref.html">ref</a>);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/*</span></div>
+<div class="line"><span class="comment">         * Finally, encode the data in-place.</span></div>
+<div class="line"><span class="comment">         *</span></div>
+<div class="line"><span class="comment">         * In-place encoding avoids the cost of allocating and copying</span></div>
+<div class="line"><span class="comment">         * potentially huge amounts of data, at the cost of (obviously)</span></div>
+<div class="line"><span class="comment">         * destroying the original data stored in the sequence.</span></div>
+<div class="line"><span class="comment">         *</span></div>
+<div class="line"><span class="comment">         * This function returns a pair of geneie_sequence_ref objects:</span></div>
+<div class="line"><span class="comment">         * the first is the a sequence containing the amino acids that</span></div>
+<div class="line"><span class="comment">         * could be encoded; the second contains the remainder of the</span></div>
+<div class="line"><span class="comment">         * DNA/mRNA sequence, starting from the first codon that failed.</span></div>
+<div class="line"><span class="comment">         */</span></div>
+<div class="line">        <a class="code" href="structgeneie__sequence__tools__ref__pair.html">pair_t</a> pair = <a class="code" href="sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f">geneie_sequence_tools_encode</a>(<a class="code" href="structgeneie__sequence__ref.html">ref</a>);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> &gt; INT_MAX)</div>
+<div class="line">            printf(<span class="stringliteral">&quot;Encoded output too long for printf&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> == 0)</div>
+<div class="line">            printf(<span class="stringliteral">&quot;No DNA/mRNA encoded\n&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">            <span class="comment">/*</span></div>
+<div class="line"><span class="comment">             * The %.*s syntax here allows us to print only the</span></div>
+<div class="line"><span class="comment">             * characters in the sequence. To learn more, check</span></div>
+<div class="line"><span class="comment">             * the Precision section of the printf man page.</span></div>
+<div class="line"><span class="comment">             */</span></div>
+<div class="line">            printf(<span class="stringliteral">&quot;Encoded output: %.*s\n&quot;</span>, (<span class="keywordtype">int</span>)pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a>, pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a81bb1789b041d2171789d1a3f9c75ade">codes</a>);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> &gt; INT_MAX)</div>
+<div class="line">            printf(<span class="stringliteral">&quot;Remaining DNA/mRNA too long for printf&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> == 0)</div>
+<div class="line">            printf(<span class="stringliteral">&quot;All DNA/mRNA encoded\n&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">            printf(<span class="stringliteral">&quot;Remaining DNA/mRNA: %.*s\n&quot;</span>, (<span class="keywordtype">int</span>)pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a>, pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a81bb1789b041d2171789d1a3f9c75ade">codes</a>);</div>
+<div class="line"> </div>
+<div class="line">        error = 0;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/*</span></div>
-<div class="line"><span class="comment">     * Most processing isn&#39;t performed against geneie_sequence</span></div>
-<div class="line"><span class="comment">     * objects directly, instead it happens through a reference.</span></div>
-<div class="line"><span class="comment">     *</span></div>
-<div class="line"><span class="comment">     * This helps to simplify resource management - references</span></div>
-<div class="line"><span class="comment">     * are never allocated and never freed; each sequence should</span></div>
-<div class="line"><span class="comment">     * have been allocated, and each must be passed to</span></div>
-<div class="line"><span class="comment">     * geneie_sequence_free().</span></div>
-<div class="line"><span class="comment">     */</span></div>
-<div class="line">    <a class="code" href="structgeneie__sequence__ref.html">ref_t</a> <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">geneie_sequence_tools_ref_from_sequence</a>(store);</div>
-<div class="line">    <span class="comment">// only consider read amount</span></div>
-<div class="line">    <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="structgeneie__sequence__ref.html#a16084c6f2824fc6ab288ead07b222d51">geneie_sequence_ref_trunc</a>(<a class="code" href="structgeneie__sequence__ref.html">ref</a>, (ssize_t)read_amount);</div>
-<div class="line">    <span class="comment">// clean whitespace</span></div>
-<div class="line">    <a class="code" href="structgeneie__sequence__ref.html">ref</a> = <a class="code" href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">geneie_sequence_tools_clean_whitespace</a>(<a class="code" href="structgeneie__sequence__ref.html">ref</a>);</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">/*</span></div>
-<div class="line"><span class="comment">     * Finally, encode the data in-place.</span></div>
-<div class="line"><span class="comment">     *</span></div>
-<div class="line"><span class="comment">     * In-place encoding avoids the cost of allocating and copying</span></div>
-<div class="line"><span class="comment">     * potentially huge amounts of data, at the cost of (obviously)</span></div>
-<div class="line"><span class="comment">     * destroying the original data stored in the sequence.</span></div>
-<div class="line"><span class="comment">     *</span></div>
-<div class="line"><span class="comment">     * This function returns a pair of geneie_sequence_ref objects:</span></div>
-<div class="line"><span class="comment">     * the first is the a sequence containing the amino acids that</span></div>
-<div class="line"><span class="comment">     * could be encoded; the second contains the remainder of the</span></div>
-<div class="line"><span class="comment">     * DNA/mRNA sequence, starting from the first codon that failed.</span></div>
-<div class="line"><span class="comment">     */</span></div>
-<div class="line">    <a class="code" href="structgeneie__sequence__tools__ref__pair.html">pair_t</a> pair = <a class="code" href="sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f">geneie_sequence_tools_encode</a>(<a class="code" href="structgeneie__sequence__ref.html">ref</a>);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> &gt; INT_MAX)</div>
-<div class="line">        printf(<span class="stringliteral">&quot;Encoded output too long for printf&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> == 0)</div>
-<div class="line">        printf(<span class="stringliteral">&quot;No DNA/mRNA encoded\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">        <span class="comment">/*</span></div>
-<div class="line"><span class="comment">         * The %.*s syntax here allows us to print only the</span></div>
-<div class="line"><span class="comment">         * characters in the sequence. To learn more, check</span></div>
-<div class="line"><span class="comment">         * the Precision section of the printf man page.</span></div>
-<div class="line"><span class="comment">         */</span></div>
-<div class="line">        printf(<span class="stringliteral">&quot;Encoded output: %.*s\n&quot;</span>, (<span class="keywordtype">int</span>)pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a>, pair.refs[0].<a class="code" href="structgeneie__sequence__ref.html#a81bb1789b041d2171789d1a3f9c75ade">codes</a>);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> &gt; INT_MAX)</div>
-<div class="line">        printf(<span class="stringliteral">&quot;Remaining DNA/mRNA too long for printf&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a> == 0)</div>
-<div class="line">        printf(<span class="stringliteral">&quot;All DNA/mRNA encoded\n&quot;</span>);</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">        printf(<span class="stringliteral">&quot;Remaining DNA/mRNA: %.*s\n&quot;</span>, (<span class="keywordtype">int</span>)pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">length</a>, pair.refs[1].<a class="code" href="structgeneie__sequence__ref.html#a81bb1789b041d2171789d1a3f9c75ade">codes</a>);</div>
-<div class="line"> </div>
-<div class="line">    <a class="code" href="structgeneie__sequence.html#a1c5c5eb0bd28edc30f4df4f652ffb654">geneie_sequence_free</a>(store);</div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">    <span class="keywordflow">return</span> error;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/*</span></div>
@@ -199,6 +195,7 @@ $(function() {
 <div class="line">    fclose(file);</div>
 <div class="line">    <span class="keywordflow">return</span> return_value;</div>
 <div class="line">}</div>
+<div class="ttc" id="asequence_8h_html_af8c073133ec34e94cc9c7548ae8b28ee"><div class="ttname"><a href="sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee">GENEIE_SEQUENCE_WITH</a></div><div class="ttdeci">#define GENEIE_SEQUENCE_WITH(NAME, LENGTH)</div><div class="ttdoc">Provides a context-manager-esque interface for a sequence.</div><div class="ttdef"><b>Definition:</b> sequence.h:163</div></div>
 <div class="ttc" id="asequence__tools_8h_html_a0fa3a8a88b5a21b9ebb17e67cc369c04"><div class="ttname"><a href="sequence__tools_8h.html#a0fa3a8a88b5a21b9ebb17e67cc369c04">geneie_sequence_tools_ref_from_sequence</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_ref_from_sequence(struct geneie_sequence sequence)</div><div class="ttdoc">Creates a reference from a sequence.</div></div>
 <div class="ttc" id="asequence__tools_8h_html_a784070c13c3df25371edcf33971f2208"><div class="ttname"><a href="sequence__tools_8h.html#a784070c13c3df25371edcf33971f2208">geneie_sequence_tools_clean_whitespace</a></div><div class="ttdeci">struct geneie_sequence_ref geneie_sequence_tools_clean_whitespace(struct geneie_sequence_ref reference)</div><div class="ttdoc">Removes any whitespace characters from the sequence.</div><div class="ttdef"><b>Definition:</b> clean_whitespace.c:65</div></div>
 <div class="ttc" id="asequence__tools_8h_html_ab7de189ca05d07b71e692e36e870b54f"><div class="ttname"><a href="sequence__tools_8h.html#ab7de189ca05d07b71e692e36e870b54f">geneie_sequence_tools_encode</a></div><div class="ttdeci">struct geneie_sequence_tools_ref_pair geneie_sequence_tools_encode(struct geneie_sequence_ref strand)</div><div class="ttdoc">Encodes mRNA sequences into amino acid sequences in-place.</div></div>
@@ -207,11 +204,7 @@ $(function() {
 <div class="ttc" id="astructgeneie__sequence__ref_html_a38c0244a506a5ce91bf20d809f9a3da4"><div class="ttname"><a href="structgeneie__sequence__ref.html#a38c0244a506a5ce91bf20d809f9a3da4">geneie_sequence_ref::length</a></div><div class="ttdeci">ssize_t length</div><div class="ttdoc">The length of the gene sequence.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:54</div></div>
 <div class="ttc" id="astructgeneie__sequence__ref_html_a81bb1789b041d2171789d1a3f9c75ade"><div class="ttname"><a href="structgeneie__sequence__ref.html#a81bb1789b041d2171789d1a3f9c75ade">geneie_sequence_ref::codes</a></div><div class="ttdeci">geneie_code * codes</div><div class="ttdoc">The beginning of the gene sequence.</div><div class="ttdef"><b>Definition:</b> sequence_ref.h:59</div></div>
 <div class="ttc" id="astructgeneie__sequence__tools__ref__pair_html"><div class="ttname"><a href="structgeneie__sequence__tools__ref__pair.html">geneie_sequence_tools_ref_pair</a></div><div class="ttdoc">Provides a pair of references.</div><div class="ttdef"><b>Definition:</b> sequence_tools.h:139</div></div>
-<div class="ttc" id="astructgeneie__sequence_html"><div class="ttname"><a href="structgeneie__sequence.html">geneie_sequence</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence.h:46</div></div>
-<div class="ttc" id="astructgeneie__sequence_html_a0622bc4bd53f6b75d80952737d0def4c"><div class="ttname"><a href="structgeneie__sequence.html#a0622bc4bd53f6b75d80952737d0def4c">geneie_sequence::geneie_sequence_alloc</a></div><div class="ttdeci">struct geneie_sequence geneie_sequence_alloc(ssize_t length)</div><div class="ttdoc">Allocates uninitialized memory for a geneie_sequence object and initializes its length member.</div></div>
-<div class="ttc" id="astructgeneie__sequence_html_a1c5c5eb0bd28edc30f4df4f652ffb654"><div class="ttname"><a href="structgeneie__sequence.html#a1c5c5eb0bd28edc30f4df4f652ffb654">geneie_sequence::geneie_sequence_free</a></div><div class="ttdeci">void geneie_sequence_free(struct geneie_sequence sequence)</div><div class="ttdoc">Frees a given geneie_sequence.</div></div>
-<div class="ttc" id="astructgeneie__sequence_html_a71851f74f637f1dfe30bc4a4584df377"><div class="ttname"><a href="structgeneie__sequence.html#a71851f74f637f1dfe30bc4a4584df377">geneie_sequence::geneie_sequence_valid</a></div><div class="ttdeci">bool geneie_sequence_valid(struct geneie_sequence sequence)</div><div class="ttdoc">Returns whether this is a valid geneie_sequence object.</div></div>
-<div class="ttc" id="astructgeneie__sequence_html_af8e59ea34fcfab0da413bd3c5f6ebb12"><div class="ttname"><a href="structgeneie__sequence.html#af8e59ea34fcfab0da413bd3c5f6ebb12">geneie_sequence::codes</a></div><div class="ttdeci">geneie_code * codes</div><div class="ttdoc">The beginning of the gene sequence.</div><div class="ttdef"><b>Definition:</b> sequence.h:62</div></div>
+<div class="ttc" id="astructgeneie__sequence_html"><div class="ttname"><a href="structgeneie__sequence.html">geneie_sequence</a></div><div class="ttdoc">Represents a sequence of codes, defined in code.h.</div><div class="ttdef"><b>Definition:</b> sequence.h:48</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

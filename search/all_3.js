@@ -29,5 +29,6 @@ var searchData=
   ['geneie_5fsequence_5ftools_5fsequence_5ffrom_5fref_32',['geneie_sequence_tools_sequence_from_ref',['../sequence__tools_8h.html#a23641900e32befb480f95477d0fe4b5d',1,'sequence_tools.h']]],
   ['geneie_5fsequence_5ftools_5fsplice_33',['geneie_sequence_tools_splice',['../sequence__tools_8h.html#ac129ec2651e8d73524d6af539450e0de',1,'sequence_tools.h']]],
   ['geneie_5fsequence_5ftools_5fsplicer_34',['geneie_sequence_tools_splicer',['../sequence__tools_8h.html#a26104078dae8af7ab972f44fb480c09f',1,'sequence_tools.h']]],
-  ['geneie_5fsequence_5fvalid_35',['geneie_sequence_valid',['../structgeneie__sequence.html#a71851f74f637f1dfe30bc4a4584df377',1,'geneie_sequence']]]
+  ['geneie_5fsequence_5fvalid_35',['geneie_sequence_valid',['../structgeneie__sequence.html#a71851f74f637f1dfe30bc4a4584df377',1,'geneie_sequence']]],
+  ['geneie_5fsequence_5fwith_36',['GENEIE_SEQUENCE_WITH',['../sequence_8h.html#af8c073133ec34e94cc9c7548ae8b28ee',1,'sequence.h']]]
 ];
