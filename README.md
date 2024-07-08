@@ -4,8 +4,10 @@ Geneie is a small, simple C library for gene processing.
 
 ## Building
 
-This library uses CMake for building. Otherwise, we try to only
-depend on standard C and POSIX for the library itself.
+This library uses CMake for building and has the following
+dependency:
+
+- libadt - https://github.com/TheMadman/libadt/tree/master
 
 Tests may include additional dependencies in the future,
 but for now they are simple C programs.
@@ -26,14 +28,11 @@ popd
 
 ## Documentation
 
-Documentation can be built using Doxygen.
+The main documentation and examples can be found here:
+https://themadman.github.io/geneie/index.html
 
-```bash
-doxygen
-```
+The example programs are built when cmake is configured with
+`-DBUILD_EXAMPLES=True`.
 
-The `doxygen` command will create a `html` directory. You can
-open the `html` version of the documentation from `html/index.html`.
-
-The documentation pages and example programs in the `pages/` directory
-are a useful starting place.
+Missing, confusing or unclear documentation is considered a
+bug. Please report it!

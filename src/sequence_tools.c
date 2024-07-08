@@ -6,6 +6,8 @@
 #include "geneie/code.h"
 #include "geneie/encoding.h"
 
+#include <libadt/vector.h>
+
 typedef struct geneie_sequence seq;
 typedef struct geneie_sequence_ref seq_r;
 typedef struct geneie_sequence_tools_ref_pair seq_r_pair;
@@ -14,6 +16,8 @@ typedef struct geneie_sequence_tools_ref_pair seq_r_pair;
 #define trunc geneie_sequence_ref_trunc
 #define one_codon geneie_encoding_one_codon
 #define valid geneie_sequence_ref_valid
+
+typedef struct libadt_vector vector;
 
 static const seq invalid_sequence = { 0 };
 
@@ -93,38 +97,46 @@ seq_r geneie_sequence_tools_splice(
 	if (strand.length <= 0)
 		return strand;
 
-	seq_r to_splice = splicer_func(strand, state);
+	// 16 picked arbitrarily
+	// how should we handle vector errors in append()?
+	LIBADT_VECTOR_WITH(splices, sizeof(seq_r), 16) {
+		seq_r remaining = strand;
 
-	if (to_splice.length <= 0)
-		return strand;
+		seq_r to_splice = { 0 };
+		while ((to_splice = splicer_func(remaining, state)).length) {
+			vector attempt = libadt_vector_append(splices, &to_splice);
+			if (libadt_vector_identity(attempt, splices)) {
+				// Better error handling somehow?
+				// Currently we just proceed with the
+				// vector that worked
+				break;
+			} else {
+				splices = attempt;
+			}
 
-	geneie_code *const to_move = &to_splice.codes[to_splice.length];
-	const ssize_t remainder_length = strand.length - (to_move - strand.codes);
-	seq_r remainder = {
-		.length = remainder_length,
-		.codes = to_move,
-	};
+			const ssize_t start = to_splice.codes - remaining.codes;
+			remaining = index(
+				remaining,
+				start + to_splice.length
+			);
+		}
 
-	seq_r remainder_after_futures = geneie_sequence_tools_splice(
-		remainder,
-		splicer_func,
-		state
-	);
+		while (splices.length) {
+			splices = libadt_vector_pop(splices, &to_splice);
 
-	const ssize_t amount_to_move = remainder_after_futures.length;
+			geneie_code
+				*const to_move = to_splice.codes + to_splice.length,
+				*const dest = to_splice.codes;
+			const size_t
+				amount_before = (size_t)(to_splice.codes - strand.codes),
+				amount_after = (size_t)strand.length
+					- (amount_before + (size_t)to_splice.length);
+			memmove(dest, to_move, amount_after);
+			strand.length -= to_splice.length;
+		}
+	}
 
-	memmove(to_splice.codes, to_move, (size_t)amount_to_move);
-
-	const ssize_t
-		amount_before_splice = (to_splice.codes - strand.codes),
-		amount_after_splice = remainder_after_futures.length;
-
-	seq_r result = {
-		amount_before_splice + amount_after_splice,
-		strand.codes,
-	};
-
-	return result;
+	return strand;
 }
 
 

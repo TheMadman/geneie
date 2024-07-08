@@ -9,6 +9,11 @@ set(SOURCES
 add_library(geneie SHARED ${SOURCES})
 add_library(geneiestatic STATIC ${SOURCES})
 
+find_library(ADT adt)
+
+target_link_libraries(geneie ${ADT})
+target_link_libraries(geneiestatic ${ADT})
+
 target_include_directories(geneie
 	PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
