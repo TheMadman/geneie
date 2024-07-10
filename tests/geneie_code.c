@@ -19,10 +19,12 @@
 #include "test_macros.h"
 #include "geneie/code.h"
 
+#include <ctype.h>
+
 static bool in(char c, const char *str)
 {
 	for (; *str; str++)
-		if (c == *str)
+		if (toupper(c) == toupper(*str))
 			return true;
 	return false;
 }
@@ -49,7 +51,7 @@ void test_nucleic_string_valid_success()
 
 void test_nucleic_string_valid_fail()
 {
-	assert(!geneie_code_nucleic_string_valid("Camel"));
+	assert(!geneie_code_nucleic_string_valid("<html>"));
 }
 
 void test_amino_char_valid_success()
@@ -73,7 +75,7 @@ void test_amino_string_valid_success()
 
 void test_amino_string_valid_fail()
 {
-	assert(!geneie_code_amino_string_valid("Camel"));
+	assert(!geneie_code_amino_string_valid("<html>"));
 }
 
 int main()

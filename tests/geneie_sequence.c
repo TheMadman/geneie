@@ -49,7 +49,7 @@ void test_from_string_success()
 
 void test_from_string_fail()
 {
-	struct geneie_sequence result = geneie_sequence_from_string("Camel");
+	struct geneie_sequence result = geneie_sequence_from_string("<html>");
 
 	assert(!result.codes);
 }

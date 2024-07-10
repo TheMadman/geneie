@@ -32,7 +32,7 @@ void test_from_literal_success()
 void test_from_literal_fail()
 {
 	struct geneie_sequence_ref
-		result = geneie_sequence_ref_from_literal("Camel");
+		result = geneie_sequence_ref_from_literal("<html>");
 
 	assert(!geneie_sequence_ref_valid(result));
 }
@@ -48,7 +48,7 @@ void test_from_string_success()
 void test_from_string_fail()
 {
 	struct geneie_sequence_ref
-		result = geneie_sequence_ref_from_string("Camel");
+		result = geneie_sequence_ref_from_string("<html>");
 
 	assert(!geneie_sequence_ref_valid(result));
 }
