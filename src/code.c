@@ -1,8 +1,10 @@
 #include "geneie/code.h"
 
+#include <ctype.h>
+
 bool geneie_code_nucleic_char_valid(char c)
 {
-	switch (c) {
+	switch (toupper(c)) {
 		case GENEIE_CODE_ADENINE:
 		case GENEIE_CODE_CYTOSINE:
 		case GENEIE_CODE_GUANINE:
@@ -37,7 +39,7 @@ bool geneie_code_nucleic_string_valid(const char *string)
 
 bool geneie_code_amino_char_valid(char c)
 {
-	switch (c) {
+	switch (toupper(c)) {
 		case GENEIE_CODE_ALANINE:
 		case GENEIE_CODE_CYSTEINE:
 		case GENEIE_CODE_ASPARTIC_ACID:

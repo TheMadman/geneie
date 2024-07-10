@@ -2,6 +2,7 @@
 
 #include "geneie/code.h"
 
+#include <ctype.h>
 #include <string.h>
 #include <limits.h>
 
@@ -75,7 +76,7 @@ bool geneie_sequence_ref_in(
 )
 {
 	for (; ref.length; ref.length--, ref.codes++)
-		if (*ref.codes == code)
+		if (toupper(*ref.codes) == toupper(code))
 			return true;
 	return false;
 }
