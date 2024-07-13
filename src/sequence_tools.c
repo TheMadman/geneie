@@ -140,13 +140,12 @@ seq_r geneie_sequence_tools_splice(
 }
 
 
-
 typedef struct {
 	ssize_t bytes_read;
 	geneie_code codon[3];
 } read_result;
 
-read_result read_one_codon(seq_r strand)
+static read_result read_one_codon(seq_r strand)
 {
 	read_result result = { 0 };
 	for (ssize_t i = 0; valid(strand) && i < 3;) {
