@@ -192,6 +192,19 @@ void test_encode(void)
 	}
 
 	{
+		char buffer[] = "AUG UA UU AA";
+		ref input = ref_from_literal(buffer);
+
+		ref expected_aminos = ref_from_literal("MY\0");
+
+		ref_pair result = geneie_sequence_tools_encode(input);
+
+		assert(geneie_sequence_ref_equal(expected_aminos, result.refs[0]));
+
+		assert(result.refs[1].length == 0);
+	}
+
+	{
 		char buffer[] = "AUGUAU-UAA";
 		ref input = ref_from_literal(buffer);
 

@@ -32,7 +32,7 @@ bool geneie_code_nucleic_char_valid(char c)
 bool geneie_code_nucleic_string_valid(const char *string)
 {
 	for (; *string; string++)
-		if (!geneie_code_nucleic_char_valid(*string))
+		if (!(geneie_code_nucleic_char_valid(*string) || isspace(*string)))
 			return false;
 	return true;
 }
@@ -69,7 +69,7 @@ bool geneie_code_amino_char_valid(char c)
 bool geneie_code_amino_string_valid(const char *string)
 {
 	for (; *string; string++)
-		if (!geneie_code_amino_char_valid(*string))
+		if (!(geneie_code_amino_char_valid(*string) || isspace(*string)))
 			return false;
 	return true;
 }

@@ -61,8 +61,6 @@ int process_file(FILE *file)
 		ref_t ref = geneie_sequence_tools_ref_from_sequence(sequence);
 		// only consider read amount
 		ref = geneie_sequence_ref_trunc(ref, (ssize_t)read_amount);
-		// clean whitespace
-		ref = geneie_sequence_tools_clean_whitespace(ref);
 
 		/*
 		 * Finally, encode the data in-place.

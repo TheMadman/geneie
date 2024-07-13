@@ -140,26 +140,56 @@ seq_r geneie_sequence_tools_splice(
 }
 
 
+
+typedef struct {
+	ssize_t bytes_read;
+	geneie_code codon[3];
+} read_result;
+
+read_result read_one_codon(seq_r strand)
+{
+	read_result result = { 0 };
+	for (ssize_t i = 0; valid(strand) && i < 3;) {
+		result.codon[i] = *strand.codes;
+		result.bytes_read++;
+		if (!isspace(*strand.codes)) {
+			i++;
+		}
+		strand = index(strand, 1);
+	}
+	return result;
+}
+
 seq_r_pair geneie_sequence_tools_encode(seq_r strand)
 {
-	ssize_t i = 0;
+	ssize_t
+		in = 0,
+		out = 0;
 
-	for (;; i++) {
-		seq_r
-			current_in = index(strand, i * 3),
-			current_out = index(strand, i);
+	for (;;) {
+		read_result read_codon = read_one_codon(index(strand, in));
 
-		if (!one_codon(current_in, current_out))
+		seq_r codon = {
+			.codes = read_codon.codon,
+			.length = 3,
+		};
+
+		seq_r amino_out = index(strand, out);
+
+		if (!one_codon(codon, amino_out)) {
 			break;
-		if (current_out.codes[0] == GENEIE_CODE_STOP) {
-			// include the stop code in the output
-			i++;
+		} else {
+			in += read_codon.bytes_read;
+			out++;
+		}
+
+		if (*amino_out.codes == GENEIE_CODE_STOP) {
 			break;
 		}
 	}
 
 	return (seq_r_pair) {
-		{ trunc(strand, i), index(strand, i * 3) },
+		{ trunc(strand, out), index(strand, in) },
 	};
 }
 
