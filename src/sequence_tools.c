@@ -175,11 +175,11 @@ seq_r_pair geneie_sequence_tools_encode(seq_r strand)
 
 		seq_r amino_out = index(strand, out);
 
-		if (!one_codon(codon, amino_out)) {
-			break;
-		} else {
+		if (one_codon(codon, amino_out)) {
 			in += read_codon.bytes_read;
 			out++;
+		} else {
+			break;
 		}
 
 		if (*amino_out.codes == GENEIE_CODE_STOP) {
