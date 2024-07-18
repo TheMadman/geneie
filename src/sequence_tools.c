@@ -19,6 +19,11 @@ typedef struct geneie_sequence_tools_ref_pair seq_r_pair;
 
 typedef struct libadt_vector vector;
 
+#define vector_identity libadt_vector_identity
+#define vector_index libadt_vector_index
+#define vector_append libadt_vector_append
+#define vector_vacuum libadt_vector_vacuum
+
 static const seq invalid_sequence = { 0 };
 
 static seq_r splice_whitespace(seq_r ref, void *_)
@@ -88,6 +93,92 @@ void geneie_sequence_tools_dna_to_premrna(seq_r reference)
 	}
 }
 
+static vector collect_splices(
+	vector splices,
+	seq_r strand,
+	geneie_sequence_tools_splicer *splicer_func,
+	void *state
+)
+{
+	seq_r remaining = strand;
+	seq_r to_splice = { 0 };
+	while ((to_splice = splicer_func(remaining, state)).length) {
+		vector attempt = vector_append(splices, &to_splice);
+		if (vector_identity(attempt, splices)) {
+			// Better error handling somehow?
+			// Currently we just proceed with the
+			// vector that worked
+			break;
+		} else {
+			splices = attempt;
+		}
+
+		const ssize_t start = to_splice.codes - remaining.codes;
+		remaining = index(
+			remaining,
+			start + to_splice.length
+		);
+	}
+	return splices;
+}
+
+static vector precompute_moves(seq_r strand, vector precomputed, vector splices)
+{
+	// not keen on this function
+	ssize_t total_backshift = 0;
+
+	// precomputes all but last move
+	for (size_t i = 0; i < splices.length - 1; i++) {
+		const seq_r *splice = vector_index(splices, i);
+		const seq_r *next = vector_index(splices, i + 1);
+
+		geneie_code *from = splice->codes + splice->length;
+		ssize_t length = next->codes - from;
+		geneie_code *to = from - total_backshift - splice->length;
+		total_backshift += splice->length;
+
+		seq_r from_seq_ref = {
+			.codes = from,
+			.length = length,
+		};
+		seq_r to_seq_ref = {
+			.codes = to,
+			.length = length,
+		};
+
+		seq_r_pair result = {
+			{ from_seq_ref, to_seq_ref }
+		};
+		precomputed = vector_append(precomputed, &result);
+	}
+
+	// last move is just whatever's left
+	const seq_r *splice = vector_index(splices, splices.length - 1);
+	geneie_code *from = splice->codes + splice->length;
+	ssize_t length = strand.length - (from - strand.codes);
+	geneie_code *to = from - total_backshift - splice->length;
+	seq_r from_seq_ref = {
+		.codes = from,
+		.length = length,
+	};
+	seq_r to_seq_ref = {
+		.codes = to,
+		.length = length,
+	};
+
+	seq_r_pair result = {
+		{ from_seq_ref, to_seq_ref }
+	};
+	precomputed = vector_append(precomputed, &result);
+
+	return precomputed;
+}
+
+static void perform_move(seq_r_pair pair)
+{
+	memmove(pair.refs[1].codes, pair.refs[0].codes, (size_t)pair.refs[0].length);
+}
+
 seq_r geneie_sequence_tools_splice(
 	seq_r strand,
 	geneie_sequence_tools_splicer *splicer_func,
@@ -100,39 +191,21 @@ seq_r geneie_sequence_tools_splice(
 	// 16 picked arbitrarily
 	// how should we handle vector errors in append()?
 	LIBADT_VECTOR_WITH(splices, sizeof(seq_r), 16) {
-		seq_r remaining = strand;
+		splices = collect_splices(splices, strand, splicer_func, state);
+		if (splices.length == 0)
+			continue;
 
-		seq_r to_splice = { 0 };
-		while ((to_splice = splicer_func(remaining, state)).length) {
-			vector attempt = libadt_vector_append(splices, &to_splice);
-			if (libadt_vector_identity(attempt, splices)) {
-				// Better error handling somehow?
-				// Currently we just proceed with the
-				// vector that worked
-				break;
-			} else {
-				splices = attempt;
+		splices = vector_vacuum(splices);
+
+		LIBADT_VECTOR_WITH(precomputed, sizeof(seq_r_pair), splices.length) {
+			precomputed = precompute_moves(strand, precomputed, splices);
+
+			for (size_t i = 0; i < precomputed.length; i++) {
+				seq_r *splice = vector_index(splices, i);
+				seq_r_pair *move = vector_index(precomputed, i);
+				perform_move(*move);
+				strand.length -= splice->length;
 			}
-
-			const ssize_t start = to_splice.codes - remaining.codes;
-			remaining = index(
-				remaining,
-				start + to_splice.length
-			);
-		}
-
-		while (splices.length) {
-			splices = libadt_vector_pop(splices, &to_splice);
-
-			geneie_code
-				*const to_move = to_splice.codes + to_splice.length,
-				*const dest = to_splice.codes;
-			const size_t
-				amount_before = (size_t)(to_splice.codes - strand.codes),
-				amount_after = (size_t)strand.length
-					- (amount_before + (size_t)to_splice.length);
-			memmove(dest, to_move, amount_after);
-			strand.length -= to_splice.length;
 		}
 	}
 

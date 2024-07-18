@@ -9,7 +9,7 @@ set(SOURCES
 add_library(geneie SHARED ${SOURCES})
 add_library(geneiestatic STATIC ${SOURCES})
 
-find_library(ADT adt)
+find_library(ADT adtstatic)
 
 target_link_libraries(geneie ${ADT})
 target_link_libraries(geneiestatic ${ADT})
