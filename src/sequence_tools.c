@@ -124,10 +124,22 @@ static vector collect_splices(
 
 static vector precompute_moves(seq_r strand, vector precomputed, vector splices)
 {
-	// not keen on this function
+	/*
+	 * This function computes exactly how much memory must
+	 * be moved, and where, to avoid moving the same (potentially
+	 * huge amount of) memory multiple times.
+	 *
+	 * I'm not keen on how hard it is to reason about but
+	 * I'm not smart enough to make it simpler.
+	 */
 	ssize_t total_backshift = 0;
 
-	// precomputes all but last move
+	/*
+	 * precomputes all but last move
+	 * The memory that must be moved is the
+	 * memory starting after the current splice
+	 * and ending at the beginning of the next splice
+	 */
 	for (size_t i = 0; i < splices.length - 1; i++) {
 		const seq_r *splice = vector_index(splices, i);
 		const seq_r *next = vector_index(splices, i + 1);
@@ -152,7 +164,10 @@ static vector precompute_moves(seq_r strand, vector precomputed, vector splices)
 		precomputed = vector_append(precomputed, &result);
 	}
 
-	// last move is just whatever's left
+	/*
+	 * last move is just whatever's left at the end of the
+	 * sequence
+	 */
 	const seq_r *splice = vector_index(splices, splices.length - 1);
 	geneie_code *from = splice->codes + splice->length;
 	ssize_t length = strand.length - (from - strand.codes);
