@@ -122,16 +122,16 @@ static vector collect_splices(
 	return splices;
 }
 
-static vector precompute_moves(seq_r strand, vector precomputed, vector splices)
+static void perform_move(seq_r from, seq_r to)
+{
+	memmove(to.codes, from.codes, (size_t)from.length);
+}
+
+static seq_r perform_moves(seq_r strand, vector splices)
 {
 	seq_r current_destination = *(seq_r*)vector_index(splices, 0);
+	ssize_t spliced = 0;
 
-	/*
-	 * precomputes all but last move
-	 * The memory that must be moved is the
-	 * memory starting after the current splice
-	 * and ending at the beginning of the next splice
-	 */
 	for (size_t i = 0; i < splices.length - 1; i++) {
 		const seq_r *splice = vector_index(splices, i);
 		const seq_r *next = vector_index(splices, i + 1);
@@ -139,18 +139,20 @@ static vector precompute_moves(seq_r strand, vector precomputed, vector splices)
 		seq_r from_seq_ref = index(*splice, splice->length);
 		ssize_t length = next->codes - from_seq_ref.codes;
 		from_seq_ref = trunc(from_seq_ref, length);
-		current_destination = trunc(current_destination, length);
 
-		seq_r_pair result = {
-			{ from_seq_ref, current_destination }
-		};
+		// In principle, we should, but in practice,
+		// we only pass this to perform_move which we
+		// know won't actually _use_ the length
+		// current_destination = trunc(current_destination, length);
+
+		perform_move(from_seq_ref, current_destination);
 
 		current_destination = index(
 			current_destination,
 			length
 		);
 
-		precomputed = vector_append(precomputed, &result);
+		spliced += splice->length;
 	}
 
 	/*
@@ -161,19 +163,13 @@ static vector precompute_moves(seq_r strand, vector precomputed, vector splices)
 	seq_r from_seq_ref = index(*splice, splice->length);
 	ssize_t length = strand.length - (from_seq_ref.codes - strand.codes);
 	from_seq_ref = trunc(from_seq_ref, length);
-	current_destination = trunc(current_destination, length);
 
-	seq_r_pair result = {
-		{ from_seq_ref, current_destination }
-	};
-	precomputed = vector_append(precomputed, &result);
+	perform_move(from_seq_ref, current_destination);
+	// current_destination = trunc(current_destination, length);
 
-	return precomputed;
-}
+	spliced += splice->length;
 
-static void perform_move(seq_r_pair pair)
-{
-	memmove(pair.refs[1].codes, pair.refs[0].codes, (size_t)pair.refs[0].length);
+	return trunc(strand, strand.length - spliced);
 }
 
 seq_r geneie_sequence_tools_splice(
@@ -191,19 +187,8 @@ seq_r geneie_sequence_tools_splice(
 		splices = collect_splices(splices, strand, splicer_func, state);
 		if (splices.length == 0)
 			continue;
-
 		splices = vector_vacuum(splices);
-
-		LIBADT_VECTOR_WITH(precomputed, sizeof(seq_r_pair), splices.length) {
-			precomputed = precompute_moves(strand, precomputed, splices);
-
-			for (size_t i = 0; i < precomputed.length; i++) {
-				seq_r *splice = vector_index(splices, i);
-				seq_r_pair *move = vector_index(precomputed, i);
-				perform_move(*move);
-				strand.length -= splice->length;
-			}
-		}
+		strand = perform_moves(strand, splices);
 	}
 
 	return strand;
